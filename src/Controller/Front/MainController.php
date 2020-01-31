@@ -14,8 +14,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MainController extends AbstractController
 {
-
-
     public function landingPage()
     {
         //$this->new();
@@ -42,7 +40,7 @@ class MainController extends AbstractController
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             $user = $form->getData();
-            //return $this->redirectToRoute('user_success');
+            //return $this->redirectToRoute('');
         }
         return $this->render('base.html.twig', [
            'form' => $form->createView()
