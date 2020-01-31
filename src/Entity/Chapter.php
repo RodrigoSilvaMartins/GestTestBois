@@ -50,14 +50,6 @@ class Chapter
         $this->subChapters = new ArrayCollection();
     }
 
-    /**
-     * @return Collection|SubChapter[]
-     */
-    public function getSubChapters(): Collection
-    {
-        return $this->subChapters;
-    }
-
     public function addSubChapter(SubChapter $subChapter): self
     {
         if (!$this->subChapters->contains($subChapter)) {
