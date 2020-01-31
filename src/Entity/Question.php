@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="QuestionRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\QuestionRepository")
  * @ORM\Table(name="t_questions")
  */
 class Question
@@ -43,14 +43,14 @@ class Question
     private $points;
 
     /**
-     * @var Image
-     * @ORM\Column(type="integer", nullable=true, name="fkImage")
-     */
-    private $image;
-
-    /**
      * @var string
      * @ORM\Column(type="text", nullable=true, name="queFormula")
      */
     private $formula;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Image")
+     * @ORM\JoinColumn(name="fkImage")
+     */
+    private $image;
 }

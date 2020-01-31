@@ -3,10 +3,12 @@
 namespace App\Entity;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="ExamRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\ExamRepository")
  * @ORM\Table(name="t_exams")
  */
 class Exam
@@ -41,7 +43,50 @@ class Exam
 
     /**
      * @var Subject
-     * @ORM\Column(type="integer", nullable=true, name="fkSubject")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Subject")
+     * @ORM\JoinColumn(nullable=false, name="fkSubject")
      */
     private $subject;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ExamQuestion", mappedBy="exam")
+     */
+    private $examQuestions;
+
+    public function __construct()
+    {
+        $this->examQuestions = new ArrayCollection();
+    }
+
+    /**
+     * @return Collection|ExamQuestion[]
+     */
+    public function getExamQuestions(): Collection
+    {
+        return $this->examQuestions;
+    }
+
+    public function addExamQuestion(ExamQuestion $examQuestion): self
+    {
+        if (!$this->examQuestions->contains($examQuestion)) {
+            $this->examQuestions[] = $examQuestion;
+            $examQuestion->setExam($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExamQuestion(ExamQuestion $examQuestion): self
+    {
+        if ($this->examQuestions->contains($examQuestion)) {
+            $this->examQuestions->removeElement($examQuestion);
+            // set the owning side to null (unless already changed)
+            if ($examQuestion->getExam() === $this) {
+                $examQuestion->setExam(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

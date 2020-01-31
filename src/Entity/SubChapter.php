@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="SubChapterRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\SubChapterRepository")
  * @ORM\Table(name="t_subChapters")
  */
 class SubChapter
@@ -31,14 +31,14 @@ class SubChapter
     private $number;
 
     /**
-     * @var Chapter
-     * @ORM\Column(type="integer", nullable=true, name="fkChapter")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Chapter", inversedBy="subChapters")
+     * @ORM\JoinColumn(nullable=false, name="fkChapter")
      */
     private $chapter;
 
     /**
-     * @var Level
-     * @ORM\Column(type="integer", nullable=true, name="fkLevel")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Level")
+     * @ORM\JoinColumn(name="fkLevel")
      */
     private $level;
 }
