@@ -50,18 +50,6 @@ class Chapter
         $this->subChapters = new ArrayCollection();
     }
 
-    public function getTheme(): ?Theme
-    {
-        return $this->theme;
-    }
-
-    public function setTheme(?Theme $theme): self
-    {
-        $this->theme = $theme;
-
-        return $this;
-    }
-
     /**
      * @return Collection|SubChapter[]
      */
