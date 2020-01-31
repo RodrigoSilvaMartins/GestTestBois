@@ -19,12 +19,6 @@ class Question
     private $id;
 
     /**
-     * @var Chapter
-     * @ORM\Column(type="integer", nullable=true, name="fkSubChapter")
-     */
-    private $chapter;
-
-    /**
      * @var Question
      * @ORM\Column(type="string", length=255, name="queQuestion")
      */
@@ -53,4 +47,10 @@ class Question
      * @ORM\JoinColumn(name="fkImage")
      */
     private $image;
+    
+     /**
+     * @var Chapter
+     * @ORM\Column(type="integer", nullable=true, name="fkSubChapter")
+     */
+    private $chapter;
 }
