@@ -12,29 +12,30 @@ use Symfony\Component\Form\FormTypeInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\Table(name="t_user")
  */
-class User implements UserInterface, FormTypeInterface
+class User implements UserInterface
 {
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", name="idUser")
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=180, unique=true)
+     * @ORM\Column(type="string", length=180, unique=true, name="useUsername")
      */
     private $username;
 
     /**
-     * @ORM\Column(type="json")
+     * @ORM\Column(type="json", name="useRoles")
      */
     private $roles = [];
 
     /**
      * @var string The hashed password
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", name="usePassword")
      */
     private $password;
 
@@ -109,55 +110,5 @@ class User implements UserInterface, FormTypeInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        // TODO: Implement buildForm() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function buildView(FormView $view, FormInterface $form, array $options)
-    {
-        // TODO: Implement buildView() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function finishView(FormView $view, FormInterface $form, array $options)
-    {
-        // TODO: Implement finishView() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getBlockPrefix()
-    {
-        // TODO: Implement getBlockPrefix() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getParent()
-    {
-        // TODO: Implement getParent() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults([
-            'data_class' => Task::class,
-        ]);
     }
 }
