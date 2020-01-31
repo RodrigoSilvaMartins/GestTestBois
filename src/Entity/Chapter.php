@@ -72,6 +72,4 @@ class Chapter
 
         return $this;
     }
-
-
 }
