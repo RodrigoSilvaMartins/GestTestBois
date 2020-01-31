@@ -29,7 +29,7 @@ class Exam
 
     /**
      * @var DateTime
-     * @ORM\Column(type="string", length=255, nullable=true, name="exaCreationDate")
+     * @ORM\Column(type="datetime", length=255, nullable=true, name="exaCreationDate")
      */
     private $creationDate;
 

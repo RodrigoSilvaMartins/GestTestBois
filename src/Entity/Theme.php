@@ -20,14 +20,14 @@ class Theme
      */
     private $id;
 
-    /** @var string
+    /**
+     * @var string
      * @ORM\Column(type="string", length=255, name="theName")
      */
     private $name;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Chapter", mappedBy="theme")
-     * @ORM\JoinColumn(name="fkChapter")
      */
     private $chapters;
 

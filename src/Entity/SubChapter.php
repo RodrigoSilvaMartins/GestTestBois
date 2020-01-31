@@ -14,7 +14,7 @@ class SubChapter
      * @var int
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", name="idSubChapter")
      */
     private $id;
 
