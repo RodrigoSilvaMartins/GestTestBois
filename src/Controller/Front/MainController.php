@@ -14,10 +14,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MainController extends AbstractController
 {
+    /**
+     * @Route("/", name="landing_page")
+     */
     public function landingPage()
     {
-        //$this->new();
-        //return $this->render('base.html.twig', ['hello' => 'VIKI']);
+        return $this->render('landingPage.html.twig', ['hello' => 'VIKI']);
     }
-
 }
