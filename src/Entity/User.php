@@ -3,15 +3,10 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormView;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Type;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -27,6 +22,7 @@ class User implements UserInterface
     private $id;
 
     /**
+     * @Assert\NotBlank
      * @ORM\Column(type="string", length=180, unique=true, name="useUsername")
      */
     private $username;
@@ -37,6 +33,7 @@ class User implements UserInterface
     private $roles = [];
 
     /**
+     * @Assert\NotBlank
      * @var string The hashed password
      * @ORM\Column(type="string", name="usePassword")
      */
@@ -54,7 +51,7 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->username;
+        return (string)$this->username;
     }
 
     public function setUsername(string $username): self
@@ -78,7 +75,8 @@ class User implements UserInterface
 
     public function setRoles(array $roles): self
     {
-        $this->roles = $roles;
+        $roles[] = 'ROLE_USER';
+        $this->roles = array_unique($roles);
 
         return $this;
     }
@@ -88,7 +86,7 @@ class User implements UserInterface
      */
     public function getPassword(): string
     {
-        return (string) $this->password;
+        return (string)$this->password;
     }
 
     public function setPassword(string $password): self
