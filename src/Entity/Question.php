@@ -49,7 +49,7 @@ class Question
     private $image;
     
      /**
-     * @var Chapter
+     * @var SubChapter
      * @ORM\Column(type="integer", nullable=true, name="fkSubChapter")
      */
     private $chapter;
