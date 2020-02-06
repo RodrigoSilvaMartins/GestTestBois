@@ -1,0 +1,19 @@
+/* style for the whole site */
+body{
+    background: linear-gradient(darkgray, darkgrey) no-repeat fixed !important;
+}
+/* login page design*/
+.login{
+    border-radius: 20px 20px;
+    margin: auto;
+    margin-top: 20% !important;
+    background: whitesmoke;
+    width: 60%;
+    height: 400px;
+}
+.loginForm{
+    padding-top: 30px !important;
+}
+.btnConnexion{
+    margin-top: 70px;
+}
