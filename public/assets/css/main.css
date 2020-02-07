@@ -31,7 +31,7 @@ header .row{
     margin-top: 10% !important;
     background: whitesmoke;
     width: 60%;
-    height: 400px;
+    height: 50vh;
 }
 .errorContainer{
     margin-left: 20%;
@@ -48,6 +48,7 @@ header .row{
 .btnConnexion{
     margin-top: 10%;
 }
+
 
 /*Landing page*/
 .landing {
