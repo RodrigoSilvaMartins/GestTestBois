@@ -3,6 +3,7 @@
 namespace App\View;
 
 use App\Entity\Question;
+use App\Entity\SubChapter;
 
 class QuestionView
 {
@@ -60,12 +61,4 @@ class QuestionView
      * @var string
      */
     public $level;
-
-    public function __construct(
-        Question $question
-    )
-    {
-        /*$id = $question->getId();
-        echo $id;*/
-    }
 }

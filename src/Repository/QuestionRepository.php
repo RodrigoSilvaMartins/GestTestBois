@@ -9,8 +9,10 @@ use App\View\QuestionView;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
-//@method Question|null find($id, $lockMode = null, $lockVersion = null)
+//
+
 /**
+ * @method Question|null find($id, $lockMode = null, $lockVersion = null)
  * @method Question|null findOneBy(array $criteria, array $orderBy = null)
  * @method Question[]    findAll()
  * @method Question[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
@@ -22,41 +24,27 @@ class QuestionRepository extends ServiceEntityRepository
         parent::__construct($registry, Question::class);
     }
 
-    public function find($id, $lockMode = null, $lockVersion = null)
+    public function list(array $id = null, array $subChapter = null): array
     {
-        $qb = $this
-            ->createQueryBuilder('SELECT new ' . Question::class . '(q.id, q.answer, q.points, q.formula, q.image, q.subChapter->name, q.subChapter->chapter->name, q.subChapter->chapter->theme->name, q.subChapter->chapter->theme->subject->name, q.subChapter->level->name)', 'q')
-            ->orderBy('q.subChapter->level->name');
+        $qb = $this->_em->createQueryBuilder()
+            ->select('q')
+            ->from(Question::class, 'q');
+
+        if (!empty($id)) {
+            $qb->andWhere('q.id in (:id)')->setParameter('id', $id);
+        }
+
+        if (!empty($subChapter)) {
+            $qb->andWhere('q.subChapter in (:subChapter)')->setParameter('subChapter', $subChapter);
+        }
 
         $result = $qb->getQuery()->execute();
-        dd($result);
-    }
-    // /**
-    //  * @return TQuestions[] Returns an array of TQuestions objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('t.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $questionViews = [];
 
-    /*
-    public function findOneBySomeField($value): ?TQuestions
-    {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        /** @var Question $question */
+        foreach ($result as $question) {
+            $questionViews[] = $question->getView();
+        }
+        return $questionViews;
     }
-    */
 }

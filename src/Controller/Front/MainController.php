@@ -4,6 +4,7 @@ namespace App\Controller\Front;
 
 use App\Repository\QuestionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -18,10 +19,13 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/test", name="test")
+     * @Route("/api/question.list", name="getQuestionsList")
      */
-    public function test(QuestionRepository $repository)
+    public function getQuestionsList(Request $request,QuestionRepository $repository): Response
     {
-        return new Response($this->get('serializer')->serialize($repository->find(1), 'json'));
+        return new Response($this->get('serializer')->serialize($repository->list(
+            $request->request->get('questionsId'),
+            $request->request->get('subChaptersId')
+        ), 'json'));
     }
 }

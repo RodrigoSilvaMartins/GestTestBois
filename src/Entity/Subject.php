@@ -74,4 +74,12 @@ class Subject
 
         return $self;
     }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
 }

@@ -98,4 +98,12 @@ class Theme
     {
         $this->subject = $subject;
     }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
 }
