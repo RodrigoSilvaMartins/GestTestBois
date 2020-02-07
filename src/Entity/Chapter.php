@@ -35,13 +35,13 @@ class Chapter
     /**
      * @var Theme
      * @ORM\ManyToOne(targetEntity="App\Entity\Theme", inversedBy="chapter")
-     * @ORM\JoinColumn(nullable=false, name="fkTheme")
+     * @ORM\JoinColumn(nullable=false, name="fkTheme", referencedColumnName="idTheme")
      */
     private $theme;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\SubChapter", mappedBy="chapter")
-     * @ORM\JoinColumn(name="fkSubChapter")
+     * @ORM\JoinColumn(name="fkSubChapter", referencedColumnName="idSubChapter")
      */
     private $subChapters;
 
@@ -71,5 +71,31 @@ class Chapter
         }
 
         return $this;
+    }
+
+    public static function create(string $name, int $number, Theme $theme): self
+    {
+        $self = new self();
+        $self->name = $name;
+        $self->number = $number;
+        $self->theme = $theme;
+
+        return $self;
+    }
+
+    /**
+     * @return Theme
+     */
+    public function getTheme(): Theme
+    {
+        return $this->theme;
+    }
+
+    /**
+     * @param Theme $theme
+     */
+    public function setTheme(Theme $theme): void
+    {
+        $this->theme = $theme;
     }
 }

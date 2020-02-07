@@ -27,15 +27,16 @@ class Theme
     private $name;
 
     /**
+     * @var Subject
+     * @ORM\ManyToOne(targetEntity="App\Entity\Subject", inversedBy="themes")
+     * @ORM\JoinColumn(nullable=false, name="fkSubject", referencedColumnName="idSubject")
+     */
+    private $subject;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Chapter", mappedBy="theme")
      */
     private $chapters;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Subject", inversedBy="themes")
-     * @ORM\JoinColumn(nullable=false, name="fkSubject")
-     */
-    private $subject;
 
     public function __construct()
     {
@@ -71,5 +72,30 @@ class Theme
         }
 
         return $this;
+    }
+
+    public static function create(string $name, Subject $subject): self
+    {
+        $self = new self();
+        $self->name = $name;
+        $self->subject = $subject;
+
+        return $self;
+    }
+
+    /**
+     * @return Subject
+     */
+    public function getSubject(): Subject
+    {
+        return $this->subject;
+    }
+
+    /**
+     * @param Subject $subject
+     */
+    public function setSubject(Subject $subject): void
+    {
+        $this->subject = $subject;
     }
 }

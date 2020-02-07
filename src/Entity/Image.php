@@ -35,4 +35,14 @@ class Image
      * @ORM\Column(type="string", length=255, name="imaFormat")
      */
     private $format;
+
+    public static function create(string $name, string $content, string $format): self
+    {
+        $self = new self();
+        $self->name = $name;
+        $self->content = $content;
+        $self->format = $format;
+
+        return $self;
+    }
 }

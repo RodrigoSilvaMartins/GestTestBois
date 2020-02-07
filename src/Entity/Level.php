@@ -22,4 +22,12 @@ class Level
      * @ORM\Column(type="string", length=255, name="levName")
      */
     private $name;
+
+    public static function create(string $name): self
+    {
+        $self = new self();
+        $self->name = $name;
+
+        return $self;
+    }
 }
