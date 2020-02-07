@@ -35,7 +35,7 @@ class Exam
 
     /**
      * @var int
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="integer", length=255)
      *
      * Usually in minutes
      */
@@ -44,7 +44,7 @@ class Exam
     /**
      * @var Subject
      * @ORM\ManyToOne(targetEntity="App\Entity\Subject")
-     * @ORM\JoinColumn(nullable=false, name="fkSubject")
+     * @ORM\JoinColumn(nullable=false, name="fkSubject", referencedColumnName="idSubject")
      */
     private $subject;
 
@@ -89,4 +89,14 @@ class Exam
         return $this;
     }
 
+    public static function create(string $name, DateTime $creationDate, int $duration, Subject $subject): self
+    {
+        $self = new self();
+        $self->name = $name;
+        $self->creationDate = $creationDate;
+        $self->duration = $duration;
+        $self->subject = $subject;
+
+        return $self;
+    }
 }

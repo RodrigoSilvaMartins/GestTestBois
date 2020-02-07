@@ -31,14 +31,43 @@ class SubChapter
     private $number;
 
     /**
+     * @var Chapter
      * @ORM\ManyToOne(targetEntity="App\Entity\Chapter", inversedBy="subChapters")
-     * @ORM\JoinColumn(nullable=false, name="fkChapter")
+     * @ORM\JoinColumn(nullable=false, name="fkChapter", referencedColumnName="idChapter")
      */
     private $chapter;
 
     /**
+     * @var Level
      * @ORM\ManyToOne(targetEntity="App\Entity\Level")
-     * @ORM\JoinColumn(name="fkLevel")
+     * @ORM\JoinColumn(name="fkLevel", referencedColumnName="idLevel")
      */
     private $level;
+
+    public static function create(string $name, int $number, Chapter $chapter, Level $level): self
+    {
+        $self = new self();
+        $self->name = $name;
+        $self->number = $number;
+        $self->chapter = $chapter;
+        $self->level = $level;
+
+        return $self;
+    }
+
+    /**
+     * @return Chapter
+     */
+    public function getChapter(): Chapter
+    {
+        return $this->chapter;
+    }
+
+    /**
+     * @param Chapter $chapter
+     */
+    public function setChapter(Chapter $chapter): void
+    {
+        $this->chapter = $chapter;
+    }
 }
