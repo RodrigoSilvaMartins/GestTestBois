@@ -30,7 +30,7 @@ final class Version20200131122424 extends AbstractMigration
         $this->addSql('CREATE TABLE t_themes (idTheme INT AUTO_INCREMENT NOT NULL, theName VARCHAR(255) NOT NULL, fkSubject INT NOT NULL, INDEX IDX_3C254A20EDEE88F5 (fkSubject), PRIMARY KEY(idTheme)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE t_exams (idExam INT AUTO_INCREMENT NOT NULL, exaName VARCHAR(255) NOT NULL, exaCreationDate DATETIME DEFAULT NULL, duration INT NOT NULL, fkSubject INT NOT NULL, INDEX IDX_D7807551EDEE88F5 (fkSubject), PRIMARY KEY(idExam)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE t_chapters (idChapter INT AUTO_INCREMENT NOT NULL, chaName VARCHAR(255) NOT NULL, chaNumber INT NOT NULL, fkTheme INT NOT NULL, INDEX IDX_13C05F2B87AF6629 (fkTheme), PRIMARY KEY(idChapter)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE t_questions (idQuestion INT AUTO_INCREMENT NOT NULL, queQuestion VARCHAR(255) NOT NULL, queAnswer VARCHAR(255) NOT NULL, quePoints INT NOT NULL, queFormula LONGTEXT DEFAULT NULL, fkSubChapter INT DEFAULT NULL, fkImage INT DEFAULT NULL, INDEX IDX_1B60D23D5E7857E (fkImage), PRIMARY KEY(idQuestion)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE t_questions (idQuestion INT AUTO_INCREMENT NOT NULL, queQuestion VARCHAR(255) NOT NULL, queAnswer VARCHAR(255) NOT NULL, quePoints INT NOT NULL, queFormula LONGTEXT DEFAULT NULL, fkSubChapter INT DEFAULT NULL, INDEX IDX_1B60D23D5E7821F (fkSubChapter) ,fkImage INT DEFAULT NULL, INDEX IDX_1B60D23D5E7857E (fkImage), PRIMARY KEY(idQuestion)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('ALTER TABLE t_subChapters ADD CONSTRAINT FK_6596B8AFEFA103A1 FOREIGN KEY (fkChapter) REFERENCES t_chapters (idChapter)');
         $this->addSql('ALTER TABLE t_subChapters ADD CONSTRAINT FK_6596B8AF8A304D32 FOREIGN KEY (fkLevel) REFERENCES t_levels (idLevel)');
         $this->addSql('ALTER TABLE t_examQuestions ADD CONSTRAINT FK_409159E43840DD5C FOREIGN KEY (fkExam) REFERENCES t_exams (idExam)');
@@ -39,6 +39,7 @@ final class Version20200131122424 extends AbstractMigration
         $this->addSql('ALTER TABLE t_exams ADD CONSTRAINT FK_D7807551EDEE88F5 FOREIGN KEY (fkSubject) REFERENCES t_subjects (idSubject)');
         $this->addSql('ALTER TABLE t_chapters ADD CONSTRAINT FK_13C05F2B87AF6629 FOREIGN KEY (fkTheme) REFERENCES t_themes (idTheme)');
         $this->addSql('ALTER TABLE t_questions ADD CONSTRAINT FK_1B60D23D5E7857E FOREIGN KEY (fkImage) REFERENCES t_image (idImage)');
+        $this->addSql('ALTER TABLE t_questions ADD CONSTRAINT FK_1B60D23D5E7821F FOREIGN KEY (fkSubChapter) REFERENCES t_subChapters (idSubChapter)');
     }
 
     public function down(Schema $schema) : void
