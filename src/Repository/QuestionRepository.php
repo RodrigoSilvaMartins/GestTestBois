@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\Chapter;
 use App\Entity\Question;
+use App\Entity\User;
+use App\View\QuestionView;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 

@@ -44,7 +44,7 @@ class Question
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Image")
-     * @ORM\JoinColumn(name="fkImage")
+     * @ORM\JoinColumn(name="fkImage", referencedColumnName="idImage")
      */
     private $image;
     
@@ -52,5 +52,5 @@ class Question
      * @var SubChapter
      * @ORM\Column(type="integer", nullable=true, name="fkSubChapter")
      */
-    private $chapter;
+    private $subChapter;
 }

@@ -2,7 +2,9 @@
 
 namespace App\View;
 
-class ExamQuestionView
+use App\Entity\Question;
+
+class QuestionView
 {
     /**
      * @var int
@@ -60,29 +62,10 @@ class ExamQuestionView
     public $level;
 
     public function __construct(
-        int $id,
-        string $question,
-        string $answer,
-        int $points,
-        string $formula,
-        string $image,
-        string $subChapter,
-        string $chapter,
-        string $theme,
-        string $subject,
-        string $level
+        Question $question
     )
     {
-        $this->id = $id;
-        $this->question = $question;
-        $this->answer = $answer;
-        $this->points = $points;
-        $this->formula = $formula;
-        $this->image = $image;
-        $this->subChapter = $subChapter;
-        $this->chapter = $chapter;
-        $this->theme = $theme;
-        $this->subject = $subject;
-        $this->level = $level;
+        /*$id = $question->getId();
+        echo $id;*/
     }
 }

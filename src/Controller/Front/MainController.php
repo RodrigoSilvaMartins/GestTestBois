@@ -2,13 +2,8 @@
 
 namespace App\Controller\Front;
 
-use App\Entity\User;
-use Symfony\Component\Form\FormTypeInterface;
+use App\Repository\QuestionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -20,5 +15,13 @@ class MainController extends AbstractController
     public function landingPage()
     {
         return $this->render('landingPage.html.twig', ['hello' => 'VIKI']);
+    }
+
+    /**
+     * @Route("/test", name="test")
+     */
+    public function test(QuestionRepository $repository)
+    {
+        return new Response($this->get('serializer')->serialize($repository->find(1), 'json'));
     }
 }
