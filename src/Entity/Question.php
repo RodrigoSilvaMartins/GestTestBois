@@ -37,20 +37,42 @@ class Question
     private $points;
 
     /**
-     * @var string
+     * @var ?string
      * @ORM\Column(type="text", nullable=true, name="queFormula")
      */
     private $formula;
 
     /**
+     * @var ?Image
      * @ORM\ManyToOne(targetEntity="App\Entity\Image")
-     * @ORM\JoinColumn(name="fkImage")
+     * @ORM\JoinColumn(name="fkImage", referencedColumnName="idImage")
      */
     private $image;
-    
-     /**
-     * @var Chapter
-     * @ORM\Column(type="integer", nullable=true, name="fkSubChapter")
+
+    /**
+     * @var SubChapter
+     * @ORM\OneToOne(targetEntity="App\Entity\SubChapter", mappedBy="question")
+     * @ORM\JoinColumn(name="fkSubChapter", referencedColumnName="idSubChapter")
      */
-    private $chapter;
+    private $subChapter;
+
+    public static function create(
+        string $question,
+        string $answer,
+        int $points,
+        ?string $formula,
+        ?Image $image,
+        SubChapter $subChapter
+    ): self
+    {
+        $self = new self();
+        $self->question = $question;
+        $self->answer = $answer;
+        $self->points = $points;
+        $self->formula = $formula;
+        $self->image = $image;
+        $self->subChapter = $subChapter;
+
+        return $self;
+    }
 }

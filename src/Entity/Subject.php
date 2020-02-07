@@ -66,4 +66,12 @@ class Subject
 
         return $this;
     }
+
+    public static function create(string $name): self
+    {
+        $self = new self();
+        $self->name = $name;
+
+        return $self;
+    }
 }
