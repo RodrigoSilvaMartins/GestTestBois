@@ -3,7 +3,7 @@
 {% block title %}Connexion!{% endblock %}
 
 {% block body %}
-    <div class="login shadow-lg">
+    <div class="login shadow-lg offset-2 col-8 ">
         <form method="post">
             {% if error %}
                 <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -15,14 +15,14 @@
                 </div>
             {% endif %}
             <div class="loginForm col-8 offset-2">
-                <div class="titleLoginForm">
+                <div class="titleLoginForm form-group">
                     <h1 class="h3 mb-3 font-weight-normal titleLogin">Connexion</h1>
                 </div>
-                <div class="usernameLoginForm">
+                <div class="usernameLoginForm form-group">
                     <label for="inputUsername">Username</label>
                     <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" required autofocus>
                 </div>
-                <div class="passwordLoginForm">
+                <div class="passwordLoginForm form-group">
                     <label for="inputPassword">Password</label>
                     <input type="password" name="password" id="inputPassword" class="form-control" required>
                 </div>
@@ -30,9 +30,8 @@
                 <input type="hidden" name="_csrf_token"
                        value="{{ csrf_token('authenticate') }}"
                 >
-
                 <button class="btnConnexion btn btn-lg btn-success offset-3 col-6" type="submit">
-                    Sign in
+                    Connexion !
                 </button>
             </div>
 
