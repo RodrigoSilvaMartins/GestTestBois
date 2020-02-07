@@ -2,6 +2,28 @@
 body{
     background: linear-gradient(darkgray, darkgrey) no-repeat fixed !important;
 }
+footer{
+    height: 100px;
+    background: darkseagreen;
+}
+header{
+    height: 100px;
+    background: darkseagreen;
+}
+header .row{
+    height: 100%;
+}
+.logoutButton{
+    text-align: center;
+
+    height: 100%;
+    margin: 0;
+    position: absolute;
+    top: 30%;
+}
+.logoutButton button{
+    vertical-align: middle;
+}
 /* login page design*/
 .login{
     border-radius:20px 20px ;
@@ -46,14 +68,14 @@ body{
 }
 .btnThemes button{
     height: 20%;
-    background: darkseagreen;
+    background: mediumseagreen;
     opacity: 90%;
 }
 .btnQuestions{
     height: 150px;
     padding-right: 0px !important;
     padding-left: 0px !important;
-    margin-top: 100px;
+
 }
 .btnQuestions button{
     height: 100%;
