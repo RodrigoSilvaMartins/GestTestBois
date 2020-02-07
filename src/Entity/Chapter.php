@@ -41,7 +41,6 @@ class Chapter
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\SubChapter", mappedBy="chapter")
-     * @ORM\JoinColumn(name="fkSubChapter", referencedColumnName="idSubChapter")
      */
     private $subChapters;
 
