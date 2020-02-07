@@ -11,22 +11,26 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     </head>
     <body>
-        <header class="border-bottom">
-            <div class="row">
-                <div class="logoHeader col-7">logo</div>
-                <div class="logoutButton col-5">
-                    <button class="btn btn-dark col-8">Déconnexion !</button>
+        {% if app.user %}
+            <header class="border-bottom">
+                <div class="row">
+                    <div class="logoHeader col-7">logo</div>
+                    <div class="logoutButton col-5">
+                        <button class="btn btn-dark col-8">Déconnexion !</button>
+                    </div>
                 </div>
-            </div>
-        </header>
+            </header>
+        {% endif  %}
         {% block body %}{% endblock %}
-        <footer>
-            <div class="row">
-                <div class="textFooter ">
-                    <p>copyright école technique des métiers de lausanne</p>
+        {% if app.user %}
+            <footer>
+                <div class="row">
+                    <div class="textFooter">
+                        <p>copyright école technique des métiers de Lausanne</p>
+                    </div>
                 </div>
-            </div>
-        </footer>
+            </footer>
+        {% endif %}
         {% block javascripts %}{% endblock %}
     </body>
 </html>
