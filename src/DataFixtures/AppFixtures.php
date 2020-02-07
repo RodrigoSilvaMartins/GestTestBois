@@ -88,7 +88,7 @@ class AppFixtures extends Fixture
         $manager->persist($question3);
         $manager->persist($question4);
         $manager->persist($question5);
-        /*$exam1 = Exam::create('FirstExam', new \DateTime(), 90, $subject1);
+        $exam1 = Exam::create('FirstExam', new \DateTime(), 90, $subject1);
         $manager->persist($exam1);
         $examQuestion1 = ExamQuestion::create(1,$exam1, $question1);
         $examQuestion2 = ExamQuestion::create(2,$exam1, $question2);
@@ -99,7 +99,7 @@ class AppFixtures extends Fixture
         $manager->persist($examQuestion2);
         $manager->persist($examQuestion3);
         $manager->persist($examQuestion4);
-        $manager->persist($examQuestion5);*/
+        $manager->persist($examQuestion5);
 
         $manager->flush();
     }

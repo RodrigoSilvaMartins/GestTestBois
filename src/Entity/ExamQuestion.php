@@ -27,7 +27,7 @@ class ExamQuestion
     /**
      * @var Exam
      * @ORM\ManyToOne(targetEntity="App\Entity\Exam", inversedBy="examQuestions")
-     * @ORM\JoinColumn(nullable=false, name="fkExam")
+     * @ORM\JoinColumn(nullable=false, name="fkExam", referencedColumnName="idExam")
      */
     private $exam;
 
