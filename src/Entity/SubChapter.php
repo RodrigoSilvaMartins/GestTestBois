@@ -70,4 +70,20 @@ class SubChapter
     {
         $this->chapter = $chapter;
     }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return Level
+     */
+    public function getLevel(): Level
+    {
+        return $this->level;
+    }
 }
