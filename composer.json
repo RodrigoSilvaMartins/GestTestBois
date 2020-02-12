@@ -1,11 +1,14 @@
 {
     "type": "project",
     "license": "proprietary",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "require": {
         "php": "^7.2.5",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-json": "*",
+        "nelmio/api-doc-bundle": "dev-master",
         "sensio/framework-extra-bundle": "^5.5",
         "symfony-bundles/json-request-bundle": "3.x",
         "symfony/asset": "5.0.*",
