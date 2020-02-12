@@ -12,7 +12,7 @@ class QuestionView
      */
     public $id;
 
-    /**q
+    /**
      * @var string
      */
     public $question;
