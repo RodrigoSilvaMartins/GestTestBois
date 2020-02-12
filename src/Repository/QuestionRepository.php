@@ -2,9 +2,14 @@
 
 namespace App\Repository;
 
+use App\Entity\Chapter;
 use App\Entity\Question;
+use App\Entity\User;
+use App\View\QuestionView;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+
+//
 
 /**
  * @method Question|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,32 +24,27 @@ class QuestionRepository extends ServiceEntityRepository
         parent::__construct($registry, Question::class);
     }
 
-    // /**
-    //  * @return TQuestions[] Returns an array of TQuestions objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function list(array $id = null, array $subChapter = null): array
     {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('t.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $qb = $this->_em->createQueryBuilder()
+            ->select('q')
+            ->from(Question::class, 'q');
 
-    /*
-    public function findOneBySomeField($value): ?TQuestions
-    {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        if (!empty($id)) {
+            $qb->andWhere('q.id in (:id)')->setParameter('id', $id);
+        }
+
+        if (!empty($subChapter)) {
+            $qb->andWhere('q.subChapter in (:subChapter)')->setParameter('subChapter', $subChapter);
+        }
+
+        $result = $qb->getQuery()->execute();
+        $questionViews = [];
+
+        /** @var Question $question */
+        foreach ($result as $question) {
+            $questionViews[] = $question->getView();
+        }
+        return $questionViews;
     }
-    */
 }

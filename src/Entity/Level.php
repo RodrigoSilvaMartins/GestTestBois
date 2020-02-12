@@ -30,4 +30,12 @@ class Level
 
         return $self;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
 }

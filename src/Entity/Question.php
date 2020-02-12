@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\View\QuestionView;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -74,5 +75,23 @@ class Question
         $self->subChapter = $subChapter;
 
         return $self;
+    }
+
+    public function getView(): QuestionView
+    {
+        $questionView = new QuestionView();
+        $questionView->id = $this->id;
+        $questionView->question = $this->question;
+        $questionView->answer = $this->answer;
+        $questionView->points = $this->points;
+        $questionView->formula = $this->formula;
+        $questionView->image = $this->image;
+        $questionView->subChapter = $this->subChapter->getName();
+        $questionView->chapter = $this->subChapter->getChapter()->getName();
+        $questionView->theme = $this->subChapter->getChapter()->getTheme()->getName();
+        $questionView->subject = $this->subChapter->getChapter()->getTheme()->getSubject()->getName();
+        $questionView->level = $this->subChapter->getLevel()->getName();
+
+        return $questionView;
     }
 }

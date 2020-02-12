@@ -97,4 +97,12 @@ class Chapter
     {
         $this->theme = $theme;
     }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
 }
