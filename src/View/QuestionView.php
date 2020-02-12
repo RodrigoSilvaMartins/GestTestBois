@@ -28,12 +28,12 @@ class QuestionView
     public $points;
 
     /**
-     * @var string
+     * @var ?string
      */
     public $formula;
 
     /**
-     * @var string
+     * @var ?string
      */
     public $image;
 
