@@ -2,11 +2,45 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
+        <link href="{{ asset('/assets/css/bootstrap.css') }}" type="text/css" rel="stylesheet" />
+        <meta charset="utf-8" />
+        <title>Color Admin | HTML Startup</title>
+        <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+        <meta content="" name="description" />
+        <meta content="" name="author" />
+
+        <!-- ================== BEGIN BASE CSS STYLE ================== -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+        <link href="../assets/css/material/app.min.css" rel="stylesheet" />
+        <!-- ================== END BASE CSS STYLE ================== -->
     </head>
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        {% if app.user %}
+            <header class="border-bottom">
+                <div class="row">
+                    <div class="logoHeader col-7">logo</div>
+                    <div class="logoutButton col-5">
+                        <button class="btn btn-dark col-8">Déconnexion !</button>
+                    </div>
+                </div>
+            </header>
+        {% endif  %}
+        {% block body %}
+        {% endblock %}
+        {% if app.user %}
+            <footer>
+                <div class="row">
+                    <div class="textFooter">
+                        <p>copyright école technique des métiers de Lausanne</p>
+                    </div>
+                </div>
+            </footer>
+        {% endif %}
+        {% block javascripts %}
+            <script src="{{ asset('assets/js/bootstrap.js') }}"></script>
+        {% endblock %}
     </body>
 </html>
