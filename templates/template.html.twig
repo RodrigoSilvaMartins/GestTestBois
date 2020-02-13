@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>GestTestBois</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+
+    <!-- ================== BEGIN BASE CSS STYLE ================== -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link href="assets/css/app.min.css" rel="stylesheet" />
+    <!-- ================== END BASE CSS STYLE ================== -->
+</head>
+<body>
+<!-- begin #page-loader -->
+    <div id="page-loader" class="fade show">
+        <div class="material-loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"></circle>
+            </svg>
+            <div class="message">Loading...</div>
+        </div>
+    </div>
+    <!-- end #page-loader -->
+
+    <!-- begin #page-container -->
+    <div id="page-container" class="page-container fade page-sidebar-fixed page-header-fixed page-with-wide-sidebar">
+        <!-- begin #header -->
+        <div id="header" class="header navbar-default">
+            <!-- begin navbar-header -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed navbar-toggle-left" data-click="sidebar-minify">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <button type="button" class="navbar-toggle" data-click="sidebar-toggled">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="index.html" class="navbar-brand">
+                    GestTestBois
+                </a>
+            </div>
+            <!-- end navbar-header -->
+            <!-- begin header-nav -->
+            <ul class="navbar-nav navbar-right">
+                <li class="dropdown navbar-user">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="d-none d-md-inline">Hi, {{ app.user.username}} </span>
+                        <div class="image image-icon bg-black text-grey-darker">
+                            <i class="material-icons">person</i>
+                        </div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a href="javascript:;" class="dropdown-item">Log Out</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <!-- end #header -->
+
+        <!-- begin #sidebar -->
+        <div id="sidebar" class="sidebar" data-disable-slide-animation="false">
+            <!-- begin sidebar scrollbar -->
+            <div data-scrollbar="false" data-height="100%">
+                <!-- begin sidebar user -->
+                <ul class="nav">
+                    <li class="nav-profile">
+                        <a href="javascript:;" data-toggle="nav-profile">
+                            <div class="cover with-shadow"></div>
+                            <div class="info">
+                                <b class="pull-right"></b>{{app.user.username}}
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <!-- end sidebar user -->
+                <!-- begin sidebar nav -->
+                <ul class="nav"><li class="nav-header">Navigation</li>
+                    <li class="active">
+                        <a href="index.html">
+                            <span>Examens</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="{{ path('questions_page') }}">
+                            <span>Questions</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="index.html">
+                            <span>Niveaux</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="index.html">
+                            <span>Chapitres</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="index.html">
+                            <span>Sous-chapitres</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="index.html">
+                            <span>Thèmes</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="index.html">
+                            <span>Sujets</span>
+                        </a>
+                    </li>
+                </ul>
+                <!-- end sidebar nav -->
+            </div>
+            <!-- end sidebar scrollbar -->
+        </div>
+        <div class="sidebar-bg"></div>
+        <!-- end #sidebar -->
+
+        <!-- begin #content -->
+        <div id="content" class="content">
+            <!-- begin page-header -->
+            <h1 class="page-header">Affichage des données</h1>
+            <!-- end page-header -->
+            <!-- begin panel -->
+            <div class="panel panel-inverse">
+                <div class="panel-heading">
+                    <h4 class="panel-title">{{title}}</h4>
+                    <div class="panel-heading-btn">
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    {% block body %}
+                    {% endblock %}
+                </div>
+            </div>
+            <!-- end panel -->
+        </div>
+        <!-- end #content -->
+
+        <!-- begin scroll to top btn -->
+        <a href="javascript:;" class="btn btn-icon btn-circle btn-success btn-scroll-to-top fade" data-click="scroll-top"><i class="fa fa-angle-up"></i></a>
+        <!-- end scroll to top btn -->
+    </div>
+    <!-- end page container -->
+<!-- ================== BEGIN BASE JS ================== -->
+<script src="../assets/js/app.min.js"></script>
+<script src="../assets/js/theme/material.min.js"></script>
+<!-- ================== END BASE JS ================== -->
+</body>
+</html>
