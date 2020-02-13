@@ -3,6 +3,7 @@
 namespace App\Controller\Front;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\Routing\Annotation\Route;
 
 class MainController extends AbstractController
@@ -12,15 +13,12 @@ class MainController extends AbstractController
      */
     public function landingPage()
     {
-//        $httpClient = HttpClient::create();
-//        $response = $httpClient->request('GET', 'api/question.list');
-//        $content = $response->toArray();
-        return $this->render('landingPage.html.twig', ['hello' => 'VIKI']);
+        return $this->render('landingPage.html.twig', ['hello' => 'VIKI', 'title'=>'Nom de données']);
     }
     /**
-     * @Route("/questions/", name ="questions_page")
+     * @Route("/questions", name ="questions_page")
      */
     public function  questionsPage(){
-        return $this->render('questions.html.twig', ['title' => 'Questions']);
+        return $this->render('questions.html.twig', ['title' => 'Questions' ]);
     }
 }

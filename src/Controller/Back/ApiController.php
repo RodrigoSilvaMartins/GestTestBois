@@ -37,7 +37,7 @@ class ApiController extends AbstractController
      */
     public function getQuestionsList(Request $request, QuestionRepository $repository): Response
     {
-        return new Response($this->get('serializer')->serialize($repository->list(
+       return new Response($this->get('serializer')->serialize($repository->list(
             $request->request->get('questionsId'),
             $request->request->get('subChaptersId')
         ), 'json'));
