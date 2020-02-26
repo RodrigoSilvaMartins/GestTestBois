@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\View\LevelView;
+use App\View\QuestionView;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -37,5 +39,13 @@ class Level
     public function getName()
     {
         return $this->name;
+    }
+    public function getView(): LevelView
+    {
+        $levelView = new LevelView();
+        $levelView->id = $this->id;
+        $levelView->name = $this->name;
+
+        return $levelView;
     }
 }
