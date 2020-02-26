@@ -56,9 +56,7 @@ class MainController extends AbstractController
             $request->request->get('questionsId'),
             $request->request->get('subChaptersId')
         ), 'json'));
-        var_dump(json_decode($response->getContent(), true));
 
         return $this->render('questions.html.twig', ['title' => 'Questions', 'questions'=>json_decode($response->getContent(), true)]);
-
     }
 }

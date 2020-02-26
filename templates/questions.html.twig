@@ -1,6 +1,6 @@
 {% extends 'template.html.twig' %}
 {% block body %}
-    <div id="content" class="content">
+    <div id="contentQuestions" class="content">
         <!-- begin row -->
         <div class="row">
             <!-- begin col-8 -->
@@ -11,23 +11,26 @@
                     <div class="table-responsive">
                         <table id="questions" class="table table-condensed table-bordered">
                             <thead>
-                            <tr>
-                                <th width="5%">Id</th>
-                                <th>Niveau</th>
-                                <th>Thème</th>
-                                <th>Sujet</th>
-                                <th>Chapitre</th>
-                                <th>Sous-chapitre</th>
-                                <th>Question</th>
-                                <th>Réponse</th>
-                                <th>Point</th>
-                            </tr>
+                            <div class="row">
+                                <tr class="col-12">
+                                    <th class="col-1">Id</th>
+                                    <th class="col-1">Niveau</th>
+                                    <th class="col-1">Thème</th>
+                                    <th class="col-1">Sujet</th>
+                                    <th class="col-1">Chapitre</th>
+                                    <th class="col-1">Sous-chapitre</th>
+                                    <th class="col-3">Question</th>
+                                    <th class="col-2">Réponse</th>
+                                    <th class="col-1">Point</th>
+                                </tr>
+                            </div>
+
                             </thead>
 
                             <tbody>
                                 {% for question in questions %}
                                     <tr>
-                                        <td>bonjour</td>
+                                        <td>{{question.id}}</td>
                                         <td>{{ question.level }}</td>
                                         <td>{{ question.theme }}</td>
                                         <td>{{ question.subject }}</td>
