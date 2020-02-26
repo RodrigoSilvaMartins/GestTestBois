@@ -2,8 +2,10 @@
 
 namespace App\Controller\Front;
 
+use http\Env\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class MainController extends AbstractController
@@ -18,7 +20,11 @@ class MainController extends AbstractController
     /**
      * @Route("/questions", name ="questions_page")
      */
-    public function  questionsPage(){
-        return $this->render('questions.html.twig', ['title' => 'Questions' ]);
+    public function  questionsPage()
+    {
+        $httpClient = HttpClient::create();
+        $response = $httpClient->request('GET', 'http://localhost:8000/api/question.list');
+        //$response = $httpClient->request('GET', 'http://localhost:8000/api/question.list', ['timeout'=>10]);
+        return $this->render('questions.html.twig', ['title' => 'Questions']);
     }
 }
