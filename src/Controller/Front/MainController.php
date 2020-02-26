@@ -5,6 +5,7 @@ namespace App\Controller\Front;
 use App\Repository\ChapterRepository;
 use App\Repository\LevelRepository;
 use App\Repository\QuestionRepository;
+use App\Repository\SubChapterRepository;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpClient\HttpClient;
@@ -118,6 +119,40 @@ class MainController extends AbstractController
      * @SWG\Tag(name="Chapters")
      */
     public function ChaptersPage(Request $request, ChapterRepository $repository): Response
+    {
+        $response = new Response($this->get('serializer')->serialize($repository->list(
+            $request->request->get('questionsId'),
+            $request->request->get('subChaptersId')
+        ), 'json'));
+
+        return $this->render('chapters.html.twig', ['title' => 'Chapitres', 'chapters'=>json_decode($response->getContent(), true)]);
+    }
+
+    /**
+     * @Route("/sous-chapitre", name="subChapters_page", methods={"GET"})
+     * @SWG\Response(
+     *     response=200,
+     *     description="Returns a list of subchapter",
+     *     @Model(type=SubChapterView::class)
+     * )
+     * @SWG\Parameter(
+     *     name="body",
+     *     in="body",
+     *     description="Subchapters filters",
+     *     required=false,
+     *     @SWG\Schema(
+     *     @SWG\Items(
+     *            type="object",
+     *        	@SWG\Property(property="subChapterId", type="array", @SWG\Items(type="integer")),
+     *         	@SWG\Property(property="chapterId", type="array", @SWG\Items(type="integer")),
+     *         	@SWG\Property(property="themeId", type="array", @SWG\Items(type="integer")),
+     *     ),
+     *     )
+     * )
+     *
+     * @SWG\Tag(name="SubChapters")
+     */
+    public function SubChaptersPage(Request $request, SubChapterRepository $repository): Response
     {
         $response = new Response($this->get('serializer')->serialize($repository->list(
             $request->request->get('questionsId'),
