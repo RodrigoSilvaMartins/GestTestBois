@@ -82,7 +82,7 @@
                 <!-- end sidebar user -->
                 <!-- begin sidebar nav -->
                 <ul class="nav" id="nav">
-                    <li class="nav-header">Navigation</li>
+                    <li class="nav-header"><b>Navigation</b></li>
                     <li>
                         <a href="index.html" onclick="setActive">
                             <span>Examens</span>
@@ -93,28 +93,28 @@
                             <span>Questions</span>
                         </a>
                     </li>
-                    <li id="niveau">
+                    <li id="level">
                         <a href="{{ path('levels_Page') }}" onclick="setActive">
                             <span>Niveaux</span>
                         </a>
                     </li>
-                    <li>
+                    <li id="chapter">
                         <a href="{{ path('chapters_page')}}" onclick="setActive">
                             <span>Chapitres</span>
                         </a>
                     </li>
-                    <li>
+                    <li id="subChapter">
                         <a href="{{ path('subChapters_page') }}" onclick="setActive">
                             <span>Sous-chapitres</span>
                         </a>
                     </li>
-                    <li>
+                    <li id="theme">
                         <a href="{{path('themes_page')}}" onclick="setActive">
                             <span>Thèmes</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="index.html" onclick="setActive">
+                    <li id="subject">
+                        <a href="{{path('subjects_page')}}" onclick="setActive">
                             <span>Sujets</span>
                         </a>
                     </li>

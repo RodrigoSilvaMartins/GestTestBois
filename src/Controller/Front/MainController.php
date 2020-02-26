@@ -6,6 +6,7 @@ use App\Repository\ChapterRepository;
 use App\Repository\LevelRepository;
 use App\Repository\QuestionRepository;
 use App\Repository\SubChapterRepository;
+use App\Repository\SubjectRepository;
 use App\Repository\ThemeRepository;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -65,7 +66,7 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/niveau", name="levels_Page", methods={"GET"})
+     * @Route("/level", name="levels_Page", methods={"GET"})
      * @SWG\Response(
      *     response=200,
      *     description="Returns a list of level",
@@ -97,7 +98,7 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/chapitre", name="chapters_page", methods={"GET"})
+     * @Route("/chapter", name="chapters_page", methods={"GET"})
      * @SWG\Response(
      *     response=200,
      *     description="Returns a list of questions",
@@ -130,7 +131,7 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/sous-chapitre", name="subChapters_page", methods={"GET"})
+     * @Route("/subChapter", name="subChapters_page", methods={"GET"})
      * @SWG\Response(
      *     response=200,
      *     description="Returns a list of subchapter",
@@ -194,5 +195,36 @@ class MainController extends AbstractController
         ), 'json'));
 
         return $this->render('themes.html.twig', ['title' => 'Thèmes', 'themes'=>json_decode($response->getContent(), true)]);
+    }
+
+    /**
+     * @Route("/subject", name="subjects_page", methods={"GET"})
+     * @SWG\Response(
+     *     response=200,
+     *     description="Returns a list of subjects",
+     *     @Model(type=themeView::class)
+     * )
+     * @SWG\Parameter(
+     *     name="body",
+     *     in="body",
+     *     description="Themes filters",
+     *     required=false,
+     *     @SWG\Schema(
+     *     @SWG\Items(
+     *            type="object",
+     *        	@SWG\Property(property="subjectId", type="array", @SWG\Items(type="integer")),
+     *     ),
+     *     )
+     * )
+     *
+     * @SWG\Tag(name="Subjects")
+     */
+    public function SubjectsPage(Request $request, SubjectRepository $repository): Response
+    {
+        $response = new Response($this->get('serializer')->serialize($repository->list(
+            $request->request->get('subjectId')
+        ), 'json'));
+
+        return $this->render('subjects.html.twig', ['title' => 'Sujet', 'subjects'=>json_decode($response->getContent(), true)]);
     }
 }
