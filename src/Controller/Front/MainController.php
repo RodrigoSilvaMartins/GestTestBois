@@ -2,7 +2,7 @@
 
 namespace App\Controller\Front;
 
-Use App\Entity\Level;
+use App\Repository\ChapterRepository;
 use App\Repository\LevelRepository;
 use App\Repository\QuestionRepository;
 use Nelmio\ApiDocBundle\Annotation\Model;
@@ -62,9 +62,8 @@ class MainController extends AbstractController
         return $this->render('questions.html.twig', ['title' => 'Questions', 'questions'=>json_decode($response->getContent(), true)]);
     }
 
-
     /**
-     * @Route("/niveau", name="level_Page", methods={"GET"})
+     * @Route("/niveau", name="levels_Page", methods={"GET"})
      * @SWG\Response(
      *     response=200,
      *     description="Returns a list of level",
@@ -93,5 +92,38 @@ class MainController extends AbstractController
         ), 'json'));
 
         return $this->render('levels.html.twig', ['title' => 'Niveaux', 'levels'=>json_decode($response->getContent(), true)]);
+    }
+
+    /**
+     * @Route("/chapitre", name="chapters_page", methods={"GET"})
+     * @SWG\Response(
+     *     response=200,
+     *     description="Returns a list of questions",
+     *     @Model(type=ChapterView::class)
+     * )
+     * @SWG\Parameter(
+     *     name="body",
+     *     in="body",
+     *     description="Chapters filters",
+     *     required=false,
+     *     @SWG\Schema(
+     *     @SWG\Items(
+     *            type="object",
+     *        	@SWG\Property(property="chapterId", type="array", @SWG\Items(type="integer")),
+     *         	@SWG\Property(property="themeId", type="array", @SWG\Items(type="integer")),
+     *     ),
+     *     )
+     * )
+     *
+     * @SWG\Tag(name="Chapters")
+     */
+    public function ChaptersPage(Request $request, ChapterRepository $repository): Response
+    {
+        $response = new Response($this->get('serializer')->serialize($repository->list(
+            $request->request->get('questionsId'),
+            $request->request->get('subChaptersId')
+        ), 'json'));
+
+        return $this->render('chapters.html.twig', ['title' => 'Chapitres', 'chapters'=>json_decode($response->getContent(), true)]);
     }
 }

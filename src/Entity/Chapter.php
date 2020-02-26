@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\View\ChapterView;
+use App\View\QuestionView;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -104,5 +106,16 @@ class Chapter
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public function getView(): ChapterView
+    {
+        $chapterView = new ChapterView();
+        $chapterView->id = $this->id;
+        $chapterView->name = $this->name;
+        $chapterView->number = $this->number;
+        $chapterView->theme = $this->theme->getName();
+
+        return $chapterView;
     }
 }

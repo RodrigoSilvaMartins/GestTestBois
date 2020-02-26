@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Chapter;
+use App\Entity\Question;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -47,4 +48,28 @@ class ChapterRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function list(array $id = null, array $theme = null): array
+    {
+        $cb = $this->_em->createQueryBuilder()
+            ->select('c')
+            ->from(Chapter::class, 'c');
+
+        if (!empty($id)) {
+            $cb->andWhere('c.id in (:id)')->setParameter('id', $id);
+        }
+
+        if (!empty($theme)) {
+            $cb->andWhere('c.theme in (:theme)')->setParameter('theme', $theme);
+        }
+
+        $result = $cb->getQuery()->execute();
+        $chapterViews = [];
+
+        /** @var Chapter $chapter */
+        foreach ($result as $chapter) {
+            $chapterViews[] = $chapter->getView();
+        }
+        return $chapterViews;
+    }
+
 }
