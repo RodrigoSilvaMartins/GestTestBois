@@ -6,6 +6,7 @@ use App\Repository\ChapterRepository;
 use App\Repository\LevelRepository;
 use App\Repository\QuestionRepository;
 use App\Repository\SubChapterRepository;
+use App\Repository\ThemeRepository;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpClient\HttpClient;
@@ -160,5 +161,38 @@ class MainController extends AbstractController
         ), 'json'));
 
         return $this->render('chapters.html.twig', ['title' => 'Chapitres', 'chapters'=>json_decode($response->getContent(), true)]);
+    }
+
+    /**
+     * @Route("/theme", name="themes_page", methods={"GET"})
+     * @SWG\Response(
+     *     response=200,
+     *     description="Returns a list of themes",
+     *     @Model(type=themeView::class)
+     * )
+     * @SWG\Parameter(
+     *     name="body",
+     *     in="body",
+     *     description="Themes filters",
+     *     required=false,
+     *     @SWG\Schema(
+     *     @SWG\Items(
+     *            type="object",
+     *        	@SWG\Property(property="themeId", type="array", @SWG\Items(type="integer")),
+     *         	@SWG\Property(property="subjectId", type="array", @SWG\Items(type="integer")),
+     *     ),
+     *     )
+     * )
+     *
+     * @SWG\Tag(name="SubChapters")
+     */
+    public function ThemesPage(Request $request, ThemeRepository $repository): Response
+    {
+        $response = new Response($this->get('serializer')->serialize($repository->list(
+            $request->request->get('themeId'),
+            $request->request->get('subjectId')
+        ), 'json'));
+
+        return $this->render('themes.html.twig', ['title' => 'Thèmes', 'themes'=>json_decode($response->getContent(), true)]);
     }
 }
