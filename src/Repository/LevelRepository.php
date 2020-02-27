@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Level;
+use App\Entity\Question;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -19,6 +20,25 @@ class LevelRepository extends ServiceEntityRepository
         parent::__construct($registry, Level::class);
     }
 
+    public function list(array $id = null): array
+    {
+        $qb = $this->_em->createQueryBuilder()
+            ->select('l')
+            ->from(Level::class, 'l');
+
+        if (!empty($id)) {
+            $qb->andWhere('l.id in (:id)')->setParameter('id', $id);
+        }
+
+        $result = $qb->getQuery()->execute();
+        $levelViews = [];
+
+        /** @var Level $level */
+        foreach ($result as $level) {
+            $levelViews[] = $level->getView();
+        }
+        return $levelViews;
+    }
     // /**
     //  * @return TLevels[] Returns an array of TLevels objects
     //  */

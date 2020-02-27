@@ -1,0 +1,46 @@
+{% extends 'template.html.twig' %}
+{% block body %}
+    <div id="contentSubChapters" class="content">
+        <!-- begin row -->
+        <div class="row">
+            <!-- begin col-8 -->
+            <div class="col-xl-12">
+                <!-- begin panel -->
+                <div class="panel panel-inverse">
+                    <!-- begin table-responsive -->
+                    <div class="table-responsive">
+                        <table id="questions" class="table table-condensed table-bordered">
+                            <thead>
+                                <div class="row">
+                                    <tr class="col-12">
+                                        <th class="col-1">Id</th>
+                                        <th class="col-1">Nom</th>
+                                        <th class="col-1">Numéro</th>
+                                        <th class="col-1">Chapitre</th>
+                                        <th class="col-1">Thème</th>
+                                    </tr>
+                                </div>
+                            </thead>
+                            <tbody>
+                                {% for subChapter in subChapters %}
+                                    <tr>
+                                        <td>{{ subChapter.id}}</td>
+                                        <td>{{ subChapter.name }}</td>
+                                        <td>{{ subChapter.number }}</td>
+                                        <td>{{ subChapter.chapter }}</td>
+                                        <td>{{ subChapter.theme }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- end table-responsive -->
+                </div>
+                <!-- end panel -->
+            </div>
+            <!-- end col-12 -->
+        </div>
+        <!-- end row -->
+    </div>
+    <!-- end #content -->
+{% endblock %}

@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Question;
 use App\Entity\SubChapter;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -47,4 +48,31 @@ class SubChapterRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function list(array $id = null, array $chapter = null, array $theme = null ) : array
+    {
+        $sb = $this->_em->createQueryBuilder()
+            ->select('s')
+            ->from(SubChapter::class, 's');
+
+        if (!empty($id)) {
+            $sb->andWhere('s.id in (:id)')->setParameter('id', $id);
+        }
+
+        if (!empty($chapter)) {
+            $sb->andWhere('s.chapter in (:chapter)')->setParameter('chapter', $chapter);
+        }
+
+        if (!empty($theme)) {
+            $sb->andWhere('s.theme in (:theme)')->setParameter('theme', $theme);
+        }
+
+        $result = $sb->getQuery()->execute();
+        $subChapterViews = [];
+
+        /** @var SubChapter $subChapter */
+        foreach ($result as $subChapter) {
+            $subChapterViews[] = $subChapter->getView();
+        }
+        return $subChapterViews;
+    }
 }

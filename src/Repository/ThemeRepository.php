@@ -47,4 +47,27 @@ class ThemeRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function list(array $id = null, array $subject = null): array
+    {
+        $tb = $this->_em->createQueryBuilder()
+            ->select('t')
+            ->from(Theme::class, 't');
+
+        if (!empty($id)) {
+            $tb->andWhere('t.id in (:id)')->setParameter('id', $id);
+        }
+
+        if (!empty($subject)) {
+            $tb->andWhere('t.subject in (:subject)')->setParameter('subject', $subject);
+        }
+
+        $result = $tb->getQuery()->execute();
+        $themeViews = [];
+
+        /** @var Theme $theme */
+        foreach ($result as $theme) {
+            $themeViews[] = $theme->getView();
+        }
+        return $themeViews;
+    }
 }
