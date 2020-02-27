@@ -60,7 +60,7 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/level", name="levels_Page", methods={"GET"})
+     * @Route("/level", name="levels_page", methods={"GET"})
      * @SWG\Response(
      *     response=200,
      *     description="Returns a list of levels",
