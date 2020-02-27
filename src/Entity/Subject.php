@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use App\View\SubChaptersView;
 use App\View\SubjectView;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
