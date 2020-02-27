@@ -6,6 +6,7 @@
             <!-- begin col-8 -->
             <div class="col-xl-12">
                 <!-- begin panel -->
+                <button id="addQuestion" class="btn btn-lg btn-aqua ">Ajout</button>
                 <div class="panel panel-inverse">
                     <!-- begin table-responsive -->
                     <div class="table-responsive">
@@ -13,7 +14,6 @@
                             <thead>
                             <div class="row">
                                 <tr class="col-12">
-                                    <th class="col-1">Id</th>
                                     <th class="col-1">Niveau</th>
                                     <th class="col-1">Thème</th>
                                     <th class="col-1">Sujet</th>
@@ -22,6 +22,7 @@
                                     <th class="col-3">Question</th>
                                     <th class="col-2">Réponse</th>
                                     <th class="col-1">Point</th>
+                                    <th class="col-1">Modification</th>
                                 </tr>
                             </div>
 
@@ -30,7 +31,6 @@
                             <tbody>
                                 {% for question in questions %}
                                     <tr>
-                                        <td>{{question.id}}</td>
                                         <td>{{ question.level }}</td>
                                         <td>{{ question.theme }}</td>
                                         <td>{{ question.subject }}</td>
@@ -39,6 +39,7 @@
                                         <td>{{ question.question }}</td>
                                         <td>{{ question.answer }}</td>
                                         <td>{{ question.points}}</td>
+                                        <td><button class="btn btn-theme btn-aqua">Editer</button></td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
