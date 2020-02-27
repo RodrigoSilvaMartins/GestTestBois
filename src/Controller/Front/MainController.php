@@ -25,12 +25,6 @@ class MainController extends AbstractController
     {
         return $this->render('landingPage.html.twig', ['hello' => 'VIKI', 'title'=>'Nom de données']);
     }
-//    /**
-//     * @Route("/questions", name ="questions_page")
-//     */
-//    public function  questionsPage(){
-//        return $this->render('questions.html.twig', ['title' => 'Questions' ]);
-//    }
 
     /**
      * @Route("/question", name="questions_page", methods={"GET"})
@@ -69,7 +63,7 @@ class MainController extends AbstractController
      * @Route("/level", name="levels_Page", methods={"GET"})
      * @SWG\Response(
      *     response=200,
-     *     description="Returns a list of level",
+     *     description="Returns a list of levels",
      *     @Model(type=LevelView::class)
      * )
      * @SWG\Parameter(
@@ -81,7 +75,6 @@ class MainController extends AbstractController
      *     @SWG\Items(
      *            type="object",
      *        	@SWG\Property(property="levelsId", type="array", @SWG\Items(type="integer")),
-     *
      *     ),
      *     )
      * )
@@ -91,7 +84,7 @@ class MainController extends AbstractController
     public function levelPage(Request $request, LevelRepository $repository): Response
     {
         $response = new Response($this->get('serializer')->serialize($repository->list(
-            $request->request->get('levelId')
+            $request->request->get('levelsId')
         ), 'json'));
 
         return $this->render('levels.html.twig', ['title' => 'Niveaux', 'levels'=>json_decode($response->getContent(), true)]);
@@ -101,7 +94,7 @@ class MainController extends AbstractController
      * @Route("/chapter", name="chapters_page", methods={"GET"})
      * @SWG\Response(
      *     response=200,
-     *     description="Returns a list of questions",
+     *     description="Returns a list of chapters",
      *     @Model(type=ChapterView::class)
      * )
      * @SWG\Parameter(
@@ -112,8 +105,8 @@ class MainController extends AbstractController
      *     @SWG\Schema(
      *     @SWG\Items(
      *            type="object",
-     *        	@SWG\Property(property="chapterId", type="array", @SWG\Items(type="integer")),
-     *         	@SWG\Property(property="themeId", type="array", @SWG\Items(type="integer")),
+     *        	@SWG\Property(property="chaptersId", type="array", @SWG\Items(type="integer")),
+     *         	@SWG\Property(property="themesId", type="array", @SWG\Items(type="integer")),
      *     ),
      *     )
      * )
@@ -123,8 +116,8 @@ class MainController extends AbstractController
     public function ChaptersPage(Request $request, ChapterRepository $repository): Response
     {
         $response = new Response($this->get('serializer')->serialize($repository->list(
-            $request->request->get('questionsId'),
-            $request->request->get('subChaptersId')
+            $request->request->get('chaptersId'),
+            $request->request->get('themesId')
         ), 'json'));
 
         return $this->render('chapters.html.twig', ['title' => 'Chapitres', 'chapters'=>json_decode($response->getContent(), true)]);
@@ -145,9 +138,9 @@ class MainController extends AbstractController
      *     @SWG\Schema(
      *     @SWG\Items(
      *            type="object",
-     *        	@SWG\Property(property="subChapterId", type="array", @SWG\Items(type="integer")),
-     *         	@SWG\Property(property="chapterId", type="array", @SWG\Items(type="integer")),
-     *         	@SWG\Property(property="themeId", type="array", @SWG\Items(type="integer")),
+     *        	@SWG\Property(property="subChaptersId", type="array", @SWG\Items(type="integer")),
+     *         	@SWG\Property(property="chaptersId", type="array", @SWG\Items(type="integer")),
+     *         	@SWG\Property(property="themesId", type="array", @SWG\Items(type="integer")),
      *     ),
      *     )
      * )
@@ -157,8 +150,9 @@ class MainController extends AbstractController
     public function SubChaptersPage(Request $request, SubChapterRepository $repository): Response
     {
         $response = new Response($this->get('serializer')->serialize($repository->list(
-            $request->request->get('questionsId'),
-            $request->request->get('subChaptersId')
+            $request->request->get('subChaptersId'),
+            $request->request->get('chaptersId'),
+            $request->request->get('levelsId')
         ), 'json'));
 
         return $this->render('chapters.html.twig', ['title' => 'Chapitres', 'chapters'=>json_decode($response->getContent(), true)]);
@@ -179,19 +173,19 @@ class MainController extends AbstractController
      *     @SWG\Schema(
      *     @SWG\Items(
      *            type="object",
-     *        	@SWG\Property(property="themeId", type="array", @SWG\Items(type="integer")),
-     *         	@SWG\Property(property="subjectId", type="array", @SWG\Items(type="integer")),
+     *        	@SWG\Property(property="themesId", type="array", @SWG\Items(type="integer")),
+     *         	@SWG\Property(property="subjectsId", type="array", @SWG\Items(type="integer")),
      *     ),
      *     )
      * )
      *
-     * @SWG\Tag(name="SubChapters")
+     * @SWG\Tag(name="Themes")
      */
     public function ThemesPage(Request $request, ThemeRepository $repository): Response
     {
         $response = new Response($this->get('serializer')->serialize($repository->list(
-            $request->request->get('themeId'),
-            $request->request->get('subjectId')
+            $request->request->get('themesId'),
+            $request->request->get('subjectsId')
         ), 'json'));
 
         return $this->render('themes.html.twig', ['title' => 'Thèmes', 'themes'=>json_decode($response->getContent(), true)]);
@@ -212,7 +206,7 @@ class MainController extends AbstractController
      *     @SWG\Schema(
      *     @SWG\Items(
      *            type="object",
-     *        	@SWG\Property(property="subjectId", type="array", @SWG\Items(type="integer")),
+     *        	@SWG\Property(property="subjectsId", type="array", @SWG\Items(type="integer")),
      *     ),
      *     )
      * )
@@ -222,7 +216,7 @@ class MainController extends AbstractController
     public function SubjectsPage(Request $request, SubjectRepository $repository): Response
     {
         $response = new Response($this->get('serializer')->serialize($repository->list(
-            $request->request->get('subjectId')
+            $request->request->get('subjectsId')
         ), 'json'));
 
         return $this->render('subjects.html.twig', ['title' => 'Sujet', 'subjects'=>json_decode($response->getContent(), true)]);
