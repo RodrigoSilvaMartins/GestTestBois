@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\View\SubjectView;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -81,5 +82,13 @@ class Subject
     public function getName(): string
     {
         return $this->name;
+    }
+    public function getView(): SubjectView
+    {
+        $subjectView = new SubjectView();
+        $subjectView->id = $this->id;
+        $subjectView->name = $this->name;
+
+        return $subjectView;
     }
 }

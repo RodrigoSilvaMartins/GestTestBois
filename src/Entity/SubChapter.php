@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\View\SubChaptersView;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -85,5 +86,17 @@ class SubChapter
     public function getLevel(): Level
     {
         return $this->level;
+    }
+
+    public function getView(): SubChaptersView
+    {
+        $subChapterView = new SubChaptersView();
+        $subChapterView->id = $this->id;
+        $subChapterView->name = $this->name;
+        $subChapterView->number = $this->number;
+        $subChapterView->chapter = $this->chapter->getName();
+        $subChapterView->theme = $this->chapter->getTheme()->getName();
+
+        return $subChapterView;
     }
 }

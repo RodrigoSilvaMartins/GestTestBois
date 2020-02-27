@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Repository\ThemeRepository;
+use App\View\ThemeView;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -105,5 +107,14 @@ class Theme
     public function getName(): string
     {
         return $this->name;
+    }
+    public function getView(): ThemeView
+    {
+        $themeView = new ThemeView();
+        $themeView->id = $this->id;
+        $themeView->name = $this->name;
+        $themeView->subject = $this->subject->getName();
+
+        return $themeView;
     }
 }

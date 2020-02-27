@@ -47,4 +47,23 @@ class SubjectRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function list(array $id = null): array
+    {
+        $sb = $this->_em->createQueryBuilder()
+            ->select('s')
+            ->from(Subject::class, 's');
+
+        if (!empty($id)) {
+            $sb->andWhere('s.id in (:id)')->setParameter('id', $id);
+        }
+
+        $result = $sb->getQuery()->execute();
+        $subjectViews = [];
+
+        /** @var Subject $subject */
+        foreach ($result as $subject) {
+            $subjectViews[] = $subject->getView();
+        }
+        return $subjectViews;
+    }
 }
