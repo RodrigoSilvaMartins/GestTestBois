@@ -1,0 +1,46 @@
+{% extends 'template.html.twig' %}
+{% block body %}
+    <div id="contentChapters" class="content">
+        <!-- begin row -->
+        <div class="row">
+            <!-- begin col-8 -->
+            <div class="col-xl-12">
+                <!-- begin panel -->
+                <div class="panel panel-inverse">
+                    <!-- begin table-responsive -->
+                    <div class="table-responsive">
+                        <table id="chapters" class="table table-condensed table-bordered">
+                            <thead>
+                            <div class="row">
+                                <tr class="col-12">
+                                    <th class="col-1">Id</th>
+                                    <th class="col-1">Nom</th>
+                                    <th class="col-1">Numéro</th>
+                                    <th class="col-1">Thème</th>
+                                </tr>
+                            </div>
+                            </thead>
+                            <tbody>
+                                {% for chapter in chapters %}
+                                    <tr>
+                                        <td>{{ chapter.id}}</td>
+                                        <td>{{ chapter.name }}</td>
+                                        <td>{{ chapter.number }}</td>
+                                        <td>{{ chapter.theme }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- end table-responsive -->
+                </div>
+                <!-- end panel -->
+            </div>
+            <!-- end col-12 -->
+
+        </div>
+        <!-- end row -->
+    </div>
+    <!-- end #content -->
+
+{% endblock %}
