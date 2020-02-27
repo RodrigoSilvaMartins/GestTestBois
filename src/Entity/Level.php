@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\View\LevelView;
-use App\View\QuestionView;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
