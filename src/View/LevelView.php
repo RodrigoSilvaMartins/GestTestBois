@@ -1,6 +1,4 @@
 <?php
-
-
 namespace App\View;
 
 use App\Entity\Level;
