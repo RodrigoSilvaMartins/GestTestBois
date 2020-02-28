@@ -1,0 +1,46 @@
+{% extends 'template.html.twig' %}
+{% block body %}
+    <div id="contentChapters" class="content content">
+        <!-- begin row -->
+        <div class="row">
+            <!-- begin col-8 -->
+            <div class="col-xl-12">
+                <!-- begin panel -->
+                <div class="panel panel-inverse">
+                    <!-- begin table-responsive -->
+                    <div class="table-responsive">
+                        <table id="chapters" class="table table-condensed table-bordered">
+                            <thead>
+                            <div class="row">
+                                <tr class="col-12">
+                                    <th class="col-1">Id</th>
+                                    <th class="col-1">Nom</th>
+                                    <th class="col-1">Date</th>
+                                    <th class="col-1">Durée</th>
+                                    <th class="col-1">Sujet</th>
+                                </tr>
+                            </div>
+                            </thead>
+                            <tbody>
+                            {% for exam in exams %}
+                                <tr>
+                                    <td>{{ exam.id}}</td>
+                                    <td>{{ exam.name }}</td>
+                                    <td>{{ exam.date }}</td>
+                                    <td>{{ exam.duration }}</td>
+                                    <td>{{ exam.subject }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- end table-responsive -->
+                </div>
+                <!-- end panel -->
+            </div>
+            <!-- end col-12 -->
+        </div>
+        <!-- end row -->
+    </div>
+    <!-- end #content -->
+{% endblock %}

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\View\ExamView;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -98,5 +99,16 @@ class Exam
         $self->subject = $subject;
 
         return $self;
+    }
+    public function getView(): ExamView
+    {
+        $examView = new ExamView();
+        $examView->id = $this->id;
+        $examView->name = $this->name;
+        $examView->date = $this->creationDate;
+        $examView->duration = $this->duration;
+        $examView->subject = $this->subject->getName();
+
+        return $examView;
     }
 }

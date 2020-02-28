@@ -47,4 +47,27 @@ class ExamRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function list(array $id = null, array $subjects = null): array
+    {
+        $eb = $this->_em->createQueryBuilder()
+            ->select('e')
+            ->from(Exam::class, 'e');
+
+        if (!empty($id)) {
+            $eb->andWhere('e.id in (:id)')->setParameter('id', $id);
+        }
+
+        if (!empty($subjects)) {
+            $eb->andWhere('e.subject in (:subject)')->setParameter('subject', $subjects);
+        }
+
+        $result = $eb->getQuery()->execute();
+        $examViews = [];
+
+        /** @var Exam $exam */
+        foreach ($result as $exam) {
+            $examViews[] = $exam->getView();
+        }
+        return $examViews;
+    }
 }
