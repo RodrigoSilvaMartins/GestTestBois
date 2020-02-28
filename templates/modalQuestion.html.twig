@@ -1,0 +1,32 @@
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modal-title">Modifier question</h4>
+            </div>
+            <div class="modal-body" id="modal_detail">
+                <div class="row">
+                    <form id="formEditQuestion">
+                        <label for="themeIn" class="label-aqua label ">Thème</label>
+                        <input type="text" class="form-control-lg col-12" id="themeIn" value="{{ question.theme }}">
+                        <label for="subjectIn" class="label-aqua label ">Sujet</label>
+                        <input type="text" class="form-control-lg col-12" id="subjectIn" value="{{ question.subject }}">
+                        <label for="chapterIn" class="label-aqua label ">Chapitre</label>
+                        <input type="text" class="form-control-lg col-12" id="chapterIn" value="{{ question.chapter }}">
+                        <label for="subChapterIn" class="label-aqua label ">Sous-chapitre</label>
+                        <input type="text" class="form-control-lg col-12" id="subChapterIn" value="{{ question.subChapter }}">
+                        <label for="questionIn" class="label-aqua label ">Question</label>
+                        <input type="text" class="form-control-lg col-12" id="questionIn" value="{{ question.question }}">
+                        <label for="answerIn" class="label-aqua label ">Réponse</label>
+                        <input type="text" class="form-control-lg col-12" id="answerIn" value="{{ question.answer }}">
+                        <label for="pointIn" class="label-aqua label ">Points</label>
+                        <input type="text" class="form-control-lg col-12" id="pointIn" value="{{ question.points }}">
+                        <br><br>
+                        <button type="submit" href="{{ path('') }}" class="btn btn-aqua col-12">Sauvergarder</button>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>

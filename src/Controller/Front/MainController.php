@@ -244,12 +244,22 @@ class MainController extends AbstractController
      *
      * @SWG\Tag(name="Exams")
      */
-    public function ExamsPage(Request $request, ExamRepository $repository): Response
+    public function ExamsPage(Request $request, ExamRepository $examRepository, QuestionRepository $questionRepository): Response
     {
-        $response = new Response($this->get('serializer')->serialize($repository->list(
-            $request->request->get('examsId')
-        ), 'json'));
 
-        return $this->render('exams.html.twig', ['title' => 'Exams', 'exams'=>json_decode($response->getContent(), true)]);
+        $exams = $examRepository->list();
+        $questions = $questionRepository->list();
+
+        return $this->render('exams.html.twig', ['title' => 'Exams', 'exams'=>$exams,'questions'=>$questions]);
     }
+
+    /**
+     * @Route ("/question/{id}/edit"), name="edit_question", methods={"GET"})
+     */
+    public  function DisplayOneQuestion(Request $request, QuestionRepository $repository, $id){
+        $question = $repository->list([$id]);
+        return $this->render('modalQuestion.html.twig', ['id' => $id, 'question'=>$question[0]]);
+    }
+
+
 }

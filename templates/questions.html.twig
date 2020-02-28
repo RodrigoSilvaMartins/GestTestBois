@@ -37,7 +37,7 @@
                                         <td>{{ question.question }}</td>
                                         <td>{{ question.answer }}</td>
                                         <td>{{ question.points}}</td>
-                                        <td><button class="btn btn-theme btn-aqua">Editer</button></td>
+                                        <td><button class="btn btn-theme btn-aqua" data-toggle="modal" onclick="editQuestion({{ question.id }})"> Editer</button></td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
@@ -49,7 +49,9 @@
             </div>
             <!-- end col-12 -->
         </div>
-        <!-- end row -->
     </div>
+    <div id="dataModal" class="modal fade">
+
     <!-- end #content -->
 {% endblock %}
+
