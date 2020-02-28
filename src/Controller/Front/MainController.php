@@ -3,6 +3,7 @@
 namespace App\Controller\Front;
 
 use App\Repository\ChapterRepository;
+use App\Repository\ExamRepository;
 use App\Repository\LevelRepository;
 use App\Repository\QuestionRepository;
 use App\Repository\SubChapterRepository;
@@ -201,7 +202,7 @@ class MainController extends AbstractController
      * @SWG\Parameter(
      *     name="body",
      *     in="body",
-     *     description="Themes filters",
+     *     description="Subjects filters",
      *     required=false,
      *     @SWG\Schema(
      *     @SWG\Items(
@@ -220,5 +221,36 @@ class MainController extends AbstractController
         ), 'json'));
 
         return $this->render('subjects.html.twig', ['title' => 'Sujet', 'subjects'=>json_decode($response->getContent(), true)]);
+    }
+
+    /**
+     * @Route("/exam", name="exams_page", methods={"GET"})
+     * @SWG\Response(
+     *     response=200,
+     *     description="Returns a list of subjects",
+     *     @Model(type=examView::class)
+     * )
+     * @SWG\Parameter(
+     *     name="body",
+     *     in="body",
+     *     description="Exams filters",
+     *     required=false,
+     *     @SWG\Schema(
+     *     @SWG\Items(
+     *            type="object",
+     *        	@SWG\Property(property="examsID", type="array", @SWG\Items(type="integer")),
+     *     ),
+     *     )
+     * )
+     *
+     * @SWG\Tag(name="Exams")
+     */
+    public function ExamsPage(Request $request, ExamRepository $repository): Response
+    {
+        $response = new Response($this->get('serializer')->serialize($repository->list(
+            $request->request->get('examsId')
+        ), 'json'));
+
+        return $this->render('exams.html.twig', ['title' => 'Exams', 'exams'=>json_decode($response->getContent(), true)]);
     }
 }

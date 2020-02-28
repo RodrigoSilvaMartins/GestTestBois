@@ -47,7 +47,7 @@ class ChapterRepository extends ServiceEntityRepository
         ;
     }
     */
-    public function list(array $id = null, array $theme = null): array
+    public function list(array $id = null, array $themes = null): array
     {
         $cb = $this->_em->createQueryBuilder()
             ->select('c')
@@ -57,8 +57,8 @@ class ChapterRepository extends ServiceEntityRepository
             $cb->andWhere('c.id in (:id)')->setParameter('id', $id);
         }
 
-        if (!empty($theme)) {
-            $cb->andWhere('c.theme in (:theme)')->setParameter('theme', $theme);
+        if (!empty($themes)) {
+            $cb->andWhere('c.theme in (:theme)')->setParameter('theme', $themes);
         }
 
         $result = $cb->getQuery()->execute();
