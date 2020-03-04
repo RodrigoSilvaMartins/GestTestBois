@@ -256,10 +256,8 @@ class MainController extends AbstractController
     /**
      * @Route ("/question/{id}/edit"), name="edit_question", methods={"GET"})
      */
-    public  function DisplayOneQuestion(Request $request, QuestionRepository $repository, $id){
+    public  function EditQuestion(Request $request, QuestionRepository $repository, $id){
         $question = $repository->list([$id]);
         return $this->render('modalQuestion.html.twig', ['id' => $id, 'question'=>$question[0]]);
     }
-
-
 }
