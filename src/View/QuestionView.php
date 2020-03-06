@@ -2,9 +2,6 @@
 
 namespace App\View;
 
-use App\Entity\Question;
-use App\Entity\SubChapter;
-
 class QuestionView
 {
     /**

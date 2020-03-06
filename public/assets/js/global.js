@@ -4,6 +4,9 @@ $(document).ready(function () {
 
 
 });
+function displayNewQuestion(){
+    $('#questionModal').modal("show");
+}
 function editQuestion(questionId){
     $('#modal-title').html("Modifier question");
 

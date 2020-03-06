@@ -6,7 +6,7 @@
             <!-- begin col-8 -->
             <div class="col-xl-12">
                 <!-- begin panel -->
-                <button id="addQuestion" class="btn btn-lg btn-aqua" onclick="openForm()">Ajout</button>
+                <button id="addQuestion" data-toggle="modal" class="btn btn-lg btn-aqua" onclick="displayNewQuestion()">Ajout</button>
                 <div class="panel panel-inverse">
                     <!-- begin table-responsive -->
                     <div class="table-responsive">
@@ -50,8 +50,11 @@
             <!-- end col-12 -->
         </div>
     </div>
-    <div id="dataModal" class="modal fade">
-
+    <div id="dataModal" class="modal fade"></div>
+    <div id="questionModal" style="
+    background-color:white;
+    opacity: 70%;
+    " class="modal fade">{{ form(newQuestion) }}</div>
     <!-- end #content -->
 {% endblock %}
 

@@ -26,8 +26,8 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        $manager->persist($this->createUser('user', 'user'));
-        $manager->persist($this->createUser('admin', 'admin', ['ROLE_ADMIN']));
+        $manager->persist($user = $this->createUser('user', 'user'));
+        $manager->persist($admin = $this->createUser('admin', 'admin', ['ROLE_ADMIN']));
 
         $subject1 = Subject::create('PRPL');
         $subject2 = Subject::create('FAPO');
@@ -77,11 +77,11 @@ class AppFixtures extends Fixture
         $manager->persist($subChapter10);
         $manager->persist($subChapter11);
         $manager->persist($subChapter12);
-        $question1 = Question::create('C\'est quoi le bois?','C\'est la vie',10, null, null, $subChapter1);
-        $question2 = Question::create('C\'est quoi une arbre?','C\'est du bois',10, null, null, $subChapter1);
-        $question3 = Question::create('C\'est quoi une table?','C\'est du bois',10, null, null, $subChapter2);
-        $question4 = Question::create('C\'est quoi une chaise?','C\'est du bois',10, null, null, $subChapter2);
-        $question5 = Question::create('C\'est quoi une porte?','C\'est du bois',10, null, null, $subChapter2);
+        $question1 = Question::create('C\'est quoi le bois?','C\'est la vie',10, null, null, $subChapter1, $user);
+        $question2 = Question::create('C\'est quoi une arbre?','C\'est du bois',10, null, null, $subChapter1, $user);
+        $question3 = Question::create('C\'est quoi une table?','C\'est du bois',10, null, null, $subChapter2, $user);
+        $question4 = Question::create('C\'est quoi une chaise?','C\'est du bois',10, null, null, $subChapter2, $user);
+        $question5 = Question::create('C\'est quoi une porte?','C\'est du bois',10, null, null, $subChapter2, $user);
         $manager->persist($question1);
         $manager->persist($question2);
         $manager->persist($question3);

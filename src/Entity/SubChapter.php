@@ -99,4 +99,8 @@ class SubChapter
 
         return $subChapterView;
     }
+
+    public function __toString() {
+        return ''.$this->id;
+    }
 }

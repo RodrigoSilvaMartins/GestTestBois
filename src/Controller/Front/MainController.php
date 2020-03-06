@@ -2,6 +2,9 @@
 
 namespace App\Controller\Front;
 
+use App\Entity\Question;
+use App\Entity\SubChapter;
+use App\Form\NewQuestionFormType;
 use App\Repository\ChapterRepository;
 use App\Repository\ExamRepository;
 use App\Repository\LevelRepository;
@@ -9,10 +12,12 @@ use App\Repository\QuestionRepository;
 use App\Repository\SubChapterRepository;
 use App\Repository\SubjectRepository;
 use App\Repository\ThemeRepository;
+use App\View\QuestionView;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Swagger\Annotations as SWG;
 
@@ -23,11 +28,11 @@ class MainController extends AbstractController
      */
     public function landingPage()
     {
-        return $this->render('landingPage.html.twig', ['hello' => 'VIKI', 'title'=>'Nom de données']);
+        return $this->render('landingPage.html.twig', ['hello' => 'VIKI', 'title' => 'Nom de données']);
     }
 
     /**
-     * @Route("/question", name="questions_page", methods={"GET"})
+     * @Route("/question", name="questions_page", methods={"GET", "POST", "PUT"})
      * @SWG\Response(
      *     response=200,
      *     description="Returns a list of questions",
@@ -51,16 +56,36 @@ class MainController extends AbstractController
      */
     public function questionsPage(Request $request, QuestionRepository $repository): Response
     {
+        $question = new Question();
+        $newQuestion = $this->createForm(NewQuestionFormType::class, $question, array(
+            'method' => 'put'));
+
+        $newQuestion->handleRequest($request);
+        if ($newQuestion->isSubmitted() && $newQuestion->isValid()) {
+            /** @var Question $question */
+            $question = $newQuestion->getData();
+            $question->setUser($this->getUser());
+            $entityManager = $this->getDoctrine()->getManager();
+
+            $entityManager->persist($question);
+            $entityManager->flush();
+
+            ///** @var SubChapter $subChapter */
+            //$subChapter = $this->getDoctrine()->getManager()->find('SubChapter', '13');
+            //Question::create($question->question, $question->answer, $question->points, null, null, $subChapter);
+            return $this->redirectToRoute('questions_page');
+        }
+
         $response = new Response($this->get('serializer')->serialize($repository->list(
             $request->request->get('questionsId'),
             $request->request->get('subChaptersId')
         ), 'json'));
 
-        return $this->render('questions.html.twig', ['title' => 'Questions', 'questions'=>json_decode($response->getContent(), true)]);
+        return $this->render('questions.html.twig', ['title' => 'Questions', 'questions' => json_decode($response->getContent(), true), 'newQuestion' => $newQuestion->createView()]);
     }
 
     /**
-     * @Route("/level", name="levels_page", methods={"GET"})
+     * @Route(name="levels_page", methods={"GET"})
      * @SWG\Response(
      *     response=200,
      *     description="Returns a list of levels",
@@ -87,7 +112,7 @@ class MainController extends AbstractController
             $request->request->get('levelsId')
         ), 'json'));
 
-        return $this->render('levels.html.twig', ['title' => 'Niveaux', 'levels'=>json_decode($response->getContent(), true)]);
+        return $this->render('levels.html.twig', ['title' => 'Niveaux', 'levels' => json_decode($response->getContent(), true)]);
     }
 
     /**
@@ -120,7 +145,7 @@ class MainController extends AbstractController
             $request->request->get('themesId')
         ), 'json'));
 
-        return $this->render('chapters.html.twig', ['title' => 'Chapitres', 'chapters'=>json_decode($response->getContent(), true)]);
+        return $this->render('chapters.html.twig', ['title' => 'Chapitres', 'chapters' => json_decode($response->getContent(), true)]);
     }
 
     /**
@@ -155,7 +180,7 @@ class MainController extends AbstractController
             $request->request->get('levelsId')
         ), 'json'));
 
-        return $this->render('chapters.html.twig', ['title' => 'Chapitres', 'chapters'=>json_decode($response->getContent(), true)]);
+        return $this->render('chapters.html.twig', ['title' => 'Chapitres', 'chapters' => json_decode($response->getContent(), true)]);
     }
 
     /**
@@ -188,7 +213,7 @@ class MainController extends AbstractController
             $request->request->get('subjectsId')
         ), 'json'));
 
-        return $this->render('themes.html.twig', ['title' => 'Thèmes', 'themes'=>json_decode($response->getContent(), true)]);
+        return $this->render('themes.html.twig', ['title' => 'Thèmes', 'themes' => json_decode($response->getContent(), true)]);
     }
 
     /**
@@ -219,7 +244,7 @@ class MainController extends AbstractController
             $request->request->get('subjectsId')
         ), 'json'));
 
-        return $this->render('subjects.html.twig', ['title' => 'Sujet', 'subjects'=>json_decode($response->getContent(), true)]);
+        return $this->render('subjects.html.twig', ['title' => 'Sujet', 'subjects' => json_decode($response->getContent(), true)]);
     }
 
     /**
@@ -250,14 +275,15 @@ class MainController extends AbstractController
         $exams = $examRepository->list();
         $questions = $questionRepository->list();
 
-        return $this->render('exams.html.twig', ['title' => 'Exams', 'exams'=>$exams,'questions'=>$questions]);
+        return $this->render('exams.html.twig', ['title' => 'Exams', 'exams' => $exams, 'questions' => $questions]);
     }
 
     /**
      * @Route ("/question/{id}/edit"), name="edit_question", methods={"GET"})
      */
-    public  function EditQuestion(Request $request, QuestionRepository $repository, $id){
+    public function EditQuestion(Request $request, QuestionRepository $repository, $id)
+    {
         $question = $repository->list([$id]);
-        return $this->render('modalQuestion.html.twig', ['id' => $id, 'question'=>$question[0]]);
+        return $this->render('modalQuestion.html.twig', ['id' => $id, 'question' => $question[0]]);
     }
 }
