@@ -2,6 +2,7 @@
 
 namespace App\Controller\Front;
 
+use App\Entity\Image;
 use App\Entity\Question;
 use App\Entity\SubChapter;
 use App\Form\NewQuestionFormType;
@@ -13,8 +14,11 @@ use App\Repository\SubChapterRepository;
 use App\Repository\SubjectRepository;
 use App\Repository\ThemeRepository;
 use App\View\QuestionView;
+use Doctrine\ORM\EntityManager;
+use Doctrine\Persistence\ObjectManager;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -56,23 +60,38 @@ class MainController extends AbstractController
      */
     public function questionsPage(Request $request, QuestionRepository $repository): Response
     {
+        $entityManager = $this->getDoctrine()->getManager();
         $question = new Question();
-        $newQuestion = $this->createForm(NewQuestionFormType::class, $question, array(
+        $newFrom = $this->createForm(NewQuestionFormType::class, $question, array(
             'method' => 'put'));
 
-        $newQuestion->handleRequest($request);
-        if ($newQuestion->isSubmitted() && $newQuestion->isValid()) {
+        $newFrom->handleRequest($request);
+        if ($newFrom->isSubmitted() && $newFrom->isValid()) {
             /** @var Question $question */
-            $question = $newQuestion->getData();
+            $question = $newFrom->getData();
             $question->setUser($this->getUser());
-            $entityManager = $this->getDoctrine()->getManager();
+
+            $editQuestion = $this->imageConversion($question, $entityManager);
 
             $entityManager->persist($question);
             $entityManager->flush();
 
-            ///** @var SubChapter $subChapter */
-            //$subChapter = $this->getDoctrine()->getManager()->find('SubChapter', '13');
-            //Question::create($question->question, $question->answer, $question->points, null, null, $subChapter);
+            return $this->redirectToRoute('questions_page');
+        }
+
+        $editQuestion = new Question();
+        $editForm = $this->createForm(NewQuestionFormType::class, $editQuestion, array(
+            'method' => 'put'));
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            /** @var Question $editQuestion */
+            $editQuestion = $editForm->getData();
+            $editQuestion->setUser($this->getUser());
+            $editQuestion = $this->imageConversion($editQuestion, $entityManager);
+
+            $entityManager->persist($editQuestion);
+            $entityManager->flush();
+
             return $this->redirectToRoute('questions_page');
         }
 
@@ -80,8 +99,20 @@ class MainController extends AbstractController
             $request->request->get('questionsId'),
             $request->request->get('subChaptersId')
         ), 'json'));
+        return $this->render('questions.html.twig', ['title' => 'Questions', 'questions' => json_decode($response->getContent(), true), 'newForm' => $newFrom->createView(), 'editForm' => $editForm->createView()]);
+    }
 
-        return $this->render('questions.html.twig', ['title' => 'Questions', 'questions' => json_decode($response->getContent(), true), 'newQuestion' => $newQuestion->createView()]);
+    public function imageConversion(Question $question,ObjectManager $entityManager) : Question
+    {
+        if (!empty($question->getImage())) {
+            /** @var UploadedFile $image */
+            $image = $question->getImage();
+            $strm = fopen($image->getRealPath(), 'rb');
+            $newImage = Image::create($image->getClientOriginalName(), stream_get_contents($strm), $image->getMimeType());
+            $entityManager->persist($newImage);
+            $question->setImage($newImage);
+        }
+        return $question;
     }
 
     /**
@@ -279,11 +310,26 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route ("/question/{id}/edit"), name="edit_question", methods={"GET"})
+     * @Route ("/question/{id}/edit", name="edit_question", methods={"GET"})
      */
-    public function EditQuestion(Request $request, QuestionRepository $repository, $id)
+    public function EditQuestion(Request $request, QuestionRepository $repository,$id)
     {
-        $question = $repository->list([$id]);
-        return $this->render('modalQuestion.html.twig', ['id' => $id, 'question' => $question[0]]);
+        $entityManager = $this->getDoctrine()->getManager();
+        $question = $entityManager->find(Question::class, $id);
+        $editForm = $this->createForm(NewQuestionFormType::class, $question, array(
+            'method' => 'put',
+            'action' => $this->generateUrl('questions_page')));
+
+        return new  Response($this->renderView('modelAddQuestion.html.twig',['editForm' => $editForm->createView()]));
+    }
+
+    /**
+     * @Route ("/question/{id}/delete", name ="delete_question", methods={"GET", "POST", "DELETE"})
+     */
+    public function deleteQuestion(Request $request, EntityManager $em, $id)
+    {
+        $em->remove($em->find(Question::class, $id));
+        $em->flush();
+        $this->redirectToRoute('questions_page');
     }
 }

@@ -37,7 +37,8 @@
                                         <td>{{ question.question }}</td>
                                         <td>{{ question.answer }}</td>
                                         <td>{{ question.points}}</td>
-                                        <td><button class="btn btn-theme btn-aqua" data-toggle="modal" onclick="editQuestion({{ question.id }})"> Editer</button></td>
+                                        <td><button class="btn btn-theme btn-aqua" data-toggle="modal" onclick="displayEditQuestion({{ question.id }})"> Editer</button></td>
+                                        <td><button class="btn btn-theme btn-black" data-toggle="modal" href="{{ path('delete_question', ['id' => question.id]) }}"> Delete</button></td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
@@ -50,11 +51,11 @@
             <!-- end col-12 -->
         </div>
     </div>
-    <div id="dataModal" class="modal fade"></div>
-    <div id="questionModal" style="
+    <div id="editQuestionModal" class="modal fade"></div>
+    <div id="newQuestionModal" style="
     background-color:white;
     opacity: 70%;
-    " class="modal fade">{{ form(newQuestion) }}</div>
+    " class="modal fade">{{ form(newForm) }}</div>
     <!-- end #content -->
 {% endblock %}
 
