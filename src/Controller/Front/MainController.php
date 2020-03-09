@@ -15,6 +15,7 @@ use App\Repository\SubjectRepository;
 use App\Repository\ThemeRepository;
 use App\View\QuestionView;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -326,10 +327,10 @@ class MainController extends AbstractController
     /**
      * @Route ("/question/{id}/delete", name ="delete_question", methods={"GET", "POST", "DELETE"})
      */
-    public function deleteQuestion(Request $request, EntityManager $em, $id)
+    public function deleteQuestion(Request $request, EntityManagerInterface $em, $id)
     {
         $em->remove($em->find(Question::class, $id));
         $em->flush();
-        $this->redirectToRoute('questions_page');
+        return $this->redirectToRoute('questions_page');
     }
 }

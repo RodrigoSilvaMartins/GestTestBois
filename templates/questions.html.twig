@@ -38,7 +38,7 @@
                                         <td>{{ question.answer }}</td>
                                         <td>{{ question.points}}</td>
                                         <td><button class="btn btn-theme btn-aqua" data-toggle="modal" onclick="displayEditQuestion({{ question.id }})"> Editer</button></td>
-                                        <td><button class="btn btn-theme btn-black" data-toggle="modal" href="{{ path('delete_question', ['id' => question.id]) }}"> Delete</button></td>
+                                        <td><a  href="{{ path('delete_question', {'id': question.id}) }}"><button class="btn btn-theme btn-black" data-toggle="modal"> Delete</button></a></td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
