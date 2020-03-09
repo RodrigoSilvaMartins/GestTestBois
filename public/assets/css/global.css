@@ -6,10 +6,17 @@
     margin-bottom: 10px;
 }
 
-#newQuestionModal{
+#newQuestionModal, #editQuestionModal{
     background-color:white;
     opacity: 90%;
     width: 70%;
     margin-top: 100px;
     height: auto;
+}
+.btn-close{
+    margin: auto;
+    margin-bottom: 10px !important;
+    float: left;
+    width: 50%;
+    text-align: center;
 }

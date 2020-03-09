@@ -9,9 +9,6 @@ function displayNewQuestion() {
     $('#newQuestionModal').modal("show");
 }
 
-function hideNewQuestion() {
-    $('#newQuestionModal').modal("hide");
-}
 
 function displayEditQuestion(questionId) {
     var url = 'question/' + questionId + '/edit';
@@ -27,5 +24,9 @@ function displayEditQuestion(questionId) {
 }
 
 function hideEditQuestion() {
+    $('#editQuestionModal').html();
     $('#editQuestionModal').modal("hide");
+}
+function hideNewQuestion() {
+    $('#newQuestionModal').modal("hide");
 }
