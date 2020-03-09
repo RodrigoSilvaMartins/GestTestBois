@@ -51,11 +51,11 @@
             <!-- end col-12 -->
         </div>
     </div>
-    <div id="editQuestionModal" class="modal fade"></div>
-    <div id="newQuestionModal" style="
-    background-color:white;
-    opacity: 70%;
-    " class="modal fade">{{ form(newForm) }}</div>
+    <div class="row">
+        <div id="editQuestionModal" class="modal fade col-6 offset-3"></div>
+        <div id="newQuestionModal" class="modal fade col-6 offset-3">{{ form(newForm) }}</div>
+    </div>
+
     <!-- end #content -->
 {% endblock %}
 
