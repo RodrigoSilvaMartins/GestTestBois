@@ -200,18 +200,6 @@ class Question
         $this->points = $points;
     }
 
-    public function getUserId(): ?User
-    {
-        return $this->userId;
-    }
-
-    public function setUserId(?User $userId): self
-    {
-        $this->userId = $userId;
-
-        return $this;
-    }
-
     /**
      * @return User
      */
