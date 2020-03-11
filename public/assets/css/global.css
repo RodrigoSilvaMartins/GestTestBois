@@ -6,6 +6,15 @@
 .contentData {
     margin-left: 0 !important;
 }
+.container-examQuestion{
+ overflow: auto;
+}
+.rowQuestion{
+    height: 80px !important;
+}
+#contentExams{
+    margin: 0;
+}
 
 #addQuestion{
     margin-bottom: 10px;

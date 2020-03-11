@@ -52,7 +52,7 @@ class Question
 
     /**
      * @var SubChapter
-     * @ORM\OneToOne(targetEntity="App\Entity\SubChapter", mappedBy="question")
+     * @ORM\ManyToOne(targetEntity="App\Entity\SubChapter")
      * @ORM\JoinColumn(name="fkSubChapter", referencedColumnName="idSubChapter")
      */
     private $subChapter;
@@ -111,7 +111,13 @@ class Question
     {
         return $this->question;
     }
-
+    /**
+     * @return int
+     */
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
     /**
      * @param string $question
      */

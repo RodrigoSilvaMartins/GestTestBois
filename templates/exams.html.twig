@@ -1,35 +1,70 @@
 {% extends 'template.html.twig' %}
 {% block body %}
-    <div id="contentChapters" class="content contentData">
+    <div id="contentExams" class="content contentData">
         <!-- begin row -->
         <div class="row">
             <!-- begin col-8 -->
-            <div class="col-xl-6">
+            <div class="col-6">
                 <!-- begin panel -->
                 <div class="panel panel-inverse">
                     <!-- begin table-responsive -->
                     <div class="table-responsive">
-                        <table id="chapters" class="table table-condensed table-bordered">
+                        <table id="exams" class="table table-condensed table-bordered">
                             <thead>
                             <div class="row">
-                                <tr class="col-12">
+                                <tr class="col-12 ">
                                     <th class="col-1">Id</th>
                                     <th class="col-2">Nom</th>
-                                    <th class="col-1">Date</th>
-                                    <th class="col-1">Durée</th>
-                                    <th class="col-1">Sujet</th>
+                                    <th class="col-2">Date</th>
+                                    <th class="col-2">Durée</th>
+                                    <th class="col-3">Sujet</th>
                                 </tr>
                             </div>
                             </thead>
                             <tbody>
                             {% for exam in exams %}
-                                <tr onclick="" id="{{ exam.id }}">
-                                    <td>{{ exam.id}}</td>
-                                    <td>{{ exam.name }}</td>
-                                    <td>{{ exam.date|date("d/m/Y") }}</td>
-                                    <td>{{ exam.duration }}</td>
-                                    <td>{{ exam.subject }}</td>
+                                <tr>
+                                    <td onclick="showQuestionExam({{ exam.id }})">{{ exam.id}}</td>
+                                    <td onclick="showQuestionExam({{ exam.id }})">{{ exam.name }}</td>
+                                    <td onclick="showQuestionExam({{ exam.id }})">{{ exam.date|date("d/m/Y") }}</td>
+                                    <td onclick="showQuestionExam({{ exam.id }})">{{ exam.duration }}</td>
+                                    <td onclick="showQuestionExam({{ exam.id }})">{{ exam.subject }}</td>
                                 </tr>
+
+                                <table id="{{exam.id}}" class="examQuestions table table-aqua table-bordered {{ exam.id }}" >
+                                    <thead>
+                                        <tr class="col-12"  >
+                                            <th>Niveau</th>
+                                            <th>Thème</th>
+                                            <th>Sujet</th>
+                                            <th>Chapitre</th>
+                                            <th>Sous-chapitre</th>
+                                            <th>Question</th>
+                                            <th>Réponse</th>
+                                            <th>Points</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="overflow-auto">
+                                    {% for examQuestion in examQuestions %}
+                                        {% if examQuestion.exam == exam.id %}
+                                            {% for question in questions %}
+                                                {% if examQuestion.question == question.id %}
+                                                    <tr class="rowQuestion">
+                                                        <td>{{ question.level }}</td>
+                                                        <td>{{ question.theme }}</td>
+                                                        <td>{{ question.subject }}</td>
+                                                        <td>{{ question.chapter }}</td>
+                                                        <td>{{ question.subChapter }}</td>
+                                                        <td>{{ question.question }}</td>
+                                                        <td>{{ question.answer }}</td>
+                                                        <td>{{ question.points}}</td>
+                                                    </tr>
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
                             {% endfor %}
                             </tbody>
                         </table>
@@ -45,7 +80,6 @@
                     <div class="table-responsive">
                         <table id="questions" class="table table-condensed table-bordered">
                             <thead>
-                            <div class="row">
                                 <tr class="col-12">
                                     <th class="col-1">Niveau</th>
                                     <th class="col-1">Thème</th>
@@ -53,15 +87,13 @@
                                     <th class="col-1">Chapitre</th>
                                     <th class="col-1">Sous-chapitre</th>
                                     <th class="col-3">Question</th>
-                                    <th class="col-2">Réponse</th>
+                                    <th class="col-3">Réponse</th>
                                     <th class="col-1">Point</th>
-                                    <th class="col-1">Modification</th>
                                 </tr>
-                            </div>
                             </thead>
                             <tbody>
                             {% for question in questions %}
-                                <tr>
+                                <tr draggable="true" data-filter="">
                                     <td>{{ question.level }}</td>
                                     <td>{{ question.theme }}</td>
                                     <td>{{ question.subject }}</td>
@@ -70,7 +102,6 @@
                                     <td>{{ question.question }}</td>
                                     <td>{{ question.answer }}</td>
                                     <td>{{ question.points}}</td>
-                                    <td><button class="btn btn-theme btn-aqua">Editer</button></td>
                                 </tr>
                             {% endfor %}
                             </tbody>

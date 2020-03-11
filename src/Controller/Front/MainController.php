@@ -13,10 +13,14 @@ use App\Repository\QuestionRepository;
 use App\Repository\SubChapterRepository;
 use App\Repository\SubjectRepository;
 use App\Repository\ThemeRepository;
+use App\Repository\ExamQuestionRepository;
 use App\View\QuestionView;
+use Doctrine\DBAL\Driver\PDOException;
+use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
+use MongoDB\Driver\Exception\Exception;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -301,13 +305,14 @@ class MainController extends AbstractController
      *
      * @SWG\Tag(name="Exams")
      */
-    public function ExamsPage(Request $request, ExamRepository $examRepository, QuestionRepository $questionRepository): Response
+    public function ExamsPage(Request $request, ExamRepository $examRepository, QuestionRepository $questionRepository, ExamQuestionRepository $examQuestionRepository ): Response
     {
 
         $exams = $examRepository->list();
         $questions = $questionRepository->list();
+        $examQuestions = $examQuestionRepository->list();
 
-        return $this->render('exams.html.twig', ['title' => 'Exams', 'exams' => $exams, 'questions' => $questions]);
+        return $this->render('exams.html.twig', ['title' => 'Exams', 'exams' => $exams, 'questions' => $questions, 'examQuestions' => $examQuestions]);
     }
 
     /**
@@ -329,8 +334,13 @@ class MainController extends AbstractController
      */
     public function deleteQuestion(Request $request, EntityManagerInterface $em, $id)
     {
-        $em->remove($em->find(Question::class, $id));
-        $em->flush();
+        try {
+            $em->remove($em->find(Question::class, $id));
+            $em->flush();
+        } catch (ForeignKeyConstraintViolationException $exception) {
+            $this->get('session')->getFlashBag()->add('error', 'Il reste une ou plusieurs occurences de la question que vous voulez supprimer dans les examens !');
+        }
+
         return $this->redirectToRoute('questions_page');
     }
 

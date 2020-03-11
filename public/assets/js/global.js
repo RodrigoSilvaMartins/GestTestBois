@@ -30,3 +30,13 @@ function hideEditQuestion() {
 function hideNewQuestion() {
     $('#newQuestionModal').modal("hide");
 }
+
+function showQuestionExam(id){
+    if(document.getElementById(id).style.display === "none"){
+
+        document.getElementById(id).style.display = null;
+    }else{
+        document.getElementById(id).style.display = "none";
+
+    }
+}

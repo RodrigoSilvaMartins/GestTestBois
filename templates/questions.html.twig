@@ -1,5 +1,9 @@
 {% extends 'template.html.twig' %}
 {% block body %}
+    {% for flashMessage in app.session.flashbag.get('error') %}
+        <script>alert("{{ flashMessage }}")</script>
+    {% endfor %}
+    <div id="contentQuestions" class="content contentData">
         <!-- begin row -->
         <div class="row">
             <!-- begin col-8 -->
@@ -22,7 +26,6 @@
                                     <th class="col-1">Point</th>
                                     <th class="col-1">Modification</th>
                                 </tr>
-
                             </thead>
                             <tbody>
                             {% for question in questions %}
@@ -47,7 +50,6 @@
                 <!-- end panel -->
             </div>
             <!-- end col-12 -->
-
         </div>
     </div>
     <div class="row">

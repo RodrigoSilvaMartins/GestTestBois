@@ -47,4 +47,31 @@ class ExamQuestionRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function list(array $id = null, array $questions = null,array $exams = null): array
+    {
+        $eb = $this->_em->createQueryBuilder()
+            ->select('e')
+            ->from(ExamQuestion::class, 'e');
+
+        if (!empty($id)) {
+            $eb->andWhere('e.id in (:id)')->setParameter('id', $id);
+        }
+
+        if (!empty($questions)) {
+            $eb->andWhere('e.question in (:question)')->setParameter('question', $questions);
+        }
+
+        if (!empty($exams)) {
+            $eb->andWhere('e.exam in (:exam)')->setParameter('exam', $exams);
+        }
+
+        $result = $eb->getQuery()->execute();
+        $examQuestionsViews = [];
+
+        /** @var ExamQuestion $examQuestion */
+        foreach ($result as $examQuestion) {
+            $examQuestionsViews[] = $examQuestion->getView();
+        }
+        return $examQuestionsViews;
+    }
 }

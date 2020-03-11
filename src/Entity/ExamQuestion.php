@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Entity\Question;
+use App\View\ExamQuestionView;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -62,5 +64,14 @@ class ExamQuestion
     public function setExam(Exam $exam): void
     {
         $this->exam = $exam;
+    }
+    public function getView(): ExamQuestionView
+    {
+        $examQuestionView = new ExamQuestionView();
+        $examQuestionView->id = $this->id;
+        $examQuestionView->question = $this->question->getId();
+        $examQuestionView->exam = $this->exam->getId();
+
+        return $examQuestionView;
     }
 }
