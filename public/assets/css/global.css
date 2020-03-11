@@ -1,3 +1,8 @@
+#loginForm{
+    margin-top: 20%;
+    padding-top: 20px;
+}
+
 .contentData {
     margin-left: 0 !important;
 }
@@ -14,9 +19,9 @@
     height: auto;
 }
 .btn-close{
-    margin: auto;
+    margin-left: auto;
     margin-bottom: 10px !important;
     float: left;
     width: 50%;
-    text-align: center;
+
 }
